@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/navListHome">
+
+    <fragment
+        android:id="@+id/navListHome"
+        android:name="com.lumisdinos.mindicador.ui.fragment.HomeListFragment"
+        android:label="@string/currency"
+        tools:layout="@layout/fragment_list_home" />
+
+    <fragment
+        android:id="@+id/navDetail"
+        android:name="com.lumisdinos.mindicador.ui.fragment.DetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_detail" />
+
+</navigation>

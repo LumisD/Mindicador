@@ -1,0 +1,65 @@
+package com.lumisdinos.mindicador.ui.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.lumisdinos.mindicador.common.util.isClickedShort
+import com.lumisdinos.mindicador.common.util.numbToStr
+import com.lumisdinos.mindicador.databinding.ItemCurrencyBinding
+import com.lumisdinos.mindicador.ui.model.CurrencyView
+
+class CurrenciesListAdapter(private val itemClickListener: OnCurrencyClickListener) :
+    ListAdapter<CurrencyView, CurrenciesListAdapter.ViewHolder>(CurrencyDiffCallback()) {
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = getItem(position)
+        holder.bind(item, itemClickListener)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder.from(parent)
+    }
+
+    class ViewHolder private constructor(private val binding: ItemCurrencyBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: CurrencyView, clickListener: OnCurrencyClickListener) {
+            binding.nameTv.text = item.nombre
+            binding.unitTv.text = item.unidadMedida
+            binding.priceTv.text = numbToStr(item.valor)
+
+            binding.root.setOnClickListener {
+                if (isClickedShort()) return@setOnClickListener
+                clickListener.onItemClicked(item.id)
+            }
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemCurrencyBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
+            }
+        }
+    }
+}
+
+
+interface OnCurrencyClickListener {
+
+    fun onItemClicked(id: Int?)
+
+}
+
+
+class CurrencyDiffCallback : DiffUtil.ItemCallback<CurrencyView>() {
+    override fun areItemsTheSame(oldItem: CurrencyView, newItem: CurrencyView): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: CurrencyView, newItem: CurrencyView): Boolean {
+        return oldItem == newItem
+    }
+}
