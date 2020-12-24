@@ -4,7 +4,7 @@ import com.lumisdinos.mindicador.data.remote.model.CurrencyEntry
 import timber.log.Timber
 import javax.inject.Inject
 
-class CurrencyRemoteSourceRepositoryImpl @Inject constructor(
+class CurrencyRemoteSourceImpl @Inject constructor(
     private val restApi: CurrencyRestApi
 ) : CurrencyRemoteSource {
 

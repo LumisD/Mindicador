@@ -3,7 +3,7 @@ package com.lumisdinos.mindicador.data.local
 import com.lumisdinos.mindicador.data.local.model.CurrencyEntity
 import javax.inject.Inject
 
-class CurrencyLocalSourceRepositoryImpl @Inject constructor(
+class CurrencyLocalSourceImpl @Inject constructor(
     private val currencyDao: CurrencyDao
 ) : CurrencyLocalSource {
 

@@ -5,7 +5,7 @@ import com.lumisdinos.mindicador.data.remote.model.SerieEntry
 import timber.log.Timber
 import javax.inject.Inject
 
-class SerieRemoteSourceRepositoryImpl @Inject constructor(
+class SerieRemoteSourceImpl @Inject constructor(
     private val restApi: CurrencyRestApi
 ) : SerieRemoteSource {
 

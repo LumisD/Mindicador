@@ -3,7 +3,7 @@ package com.lumisdinos.mindicador.data.local
 import com.lumisdinos.mindicador.data.local.model.SerieEntity
 import javax.inject.Inject
 
-class SerieLocalSourceRepositoryImpl @Inject constructor(
+class SerieLocalSourceImpl @Inject constructor(
     private val serieDao: SerieDao
 ) : SerieLocalSource {
 
