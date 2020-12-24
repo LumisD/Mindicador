@@ -1,6 +1,6 @@
 package com.lumisdinos.mindicador.di
 
-import android.content.Context
+import android.app.Application
 import com.lumisdinos.mindicador.MindicadorApp
 import dagger.BindsInstance
 import dagger.Component
@@ -19,9 +19,13 @@ import javax.inject.Singleton
     ]
 )
 interface AppComponent : AndroidInjector<MindicadorApp> {
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun application(application: Application): Builder
 
-    @Component.Factory
-    interface Factory {
-        fun create(@BindsInstance applicationContext: Context): AppComponent
+        fun build(): AppComponent
     }
+
+    override fun inject(app: MindicadorApp)
 }
