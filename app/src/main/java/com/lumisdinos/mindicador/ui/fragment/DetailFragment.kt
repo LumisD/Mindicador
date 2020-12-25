@@ -93,6 +93,7 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
     }
 
 
+    //--  OnSerieClickListener  --
     override fun onItemClicked(id: Int?) {
         Timber.d("qwer onItemClicked")
     }

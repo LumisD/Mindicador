@@ -100,23 +100,23 @@ abstract class DataModuleBinds {
     abstract fun bindCurrencyRepository(repository: CurrencyDataRepository): CurrencyRepository
 
     @Binds
-    abstract fun bindCurrencyLocal(currencyLocal: CurrencyLocalSourceImpl): CurrencyLocalSource
+    abstract fun bindCurrencyLocalSource(currencyLocal: CurrencyLocalSourceImpl): CurrencyLocalSource
 
     @Binds
-    abstract fun bindCurrencyRemote(currencyRemote: CurrencyRemoteSourceImpl): CurrencyRemoteSource
+    abstract fun bindCurrencyRemoteSource(currencyRemote: CurrencyRemoteSourceImpl): CurrencyRemoteSource
 
     @Binds
     abstract fun bindCurrencyStateRepository(currencyRemote: CurrencyStateRepositoryImpl): CurrencyStateRepository
 
     @Binds
-    abstract fun bindCurrencyStateRepository(currencyRemote: CurrencyLogicRepositoryImpl): CurrencyLogicRepository
+    abstract fun bindCurrencyLogicRepository(currencyLogic: CurrencyLogicRepositoryImpl): CurrencyLogicRepository
 
     //Details
     @Binds
     abstract fun bindSerieRepository(repository: SerieDataRepository): SerieRepository
 
     @Binds
-    abstract fun bindCurrencyLocal(currencyLocal: SerieLocalSourceImpl): SerieLocalSource
+    abstract fun bindSerieLocalSource(serieLocal: SerieLocalSourceImpl): SerieLocalSource
 
     @Binds
     abstract fun bindSerieRemote(currencyRemote: SerieRemoteSourceImpl): SerieRemoteSource
@@ -125,6 +125,6 @@ abstract class DataModuleBinds {
     abstract fun bindSerieStateRepository(currencyRemote: SerieStateRepositoryImpl): SerieStateRepository
 
     @Binds
-    abstract fun bindSerieStateRepository(currencyRemote: SerieLogicRepositoryImpl): SerieLogicRepository
+    abstract fun bindSerieLogicRepository(currencyRemote: SerieLogicRepositoryImpl): SerieLogicRepository
 
 }

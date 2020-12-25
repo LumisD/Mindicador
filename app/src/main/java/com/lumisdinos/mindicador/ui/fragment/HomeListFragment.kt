@@ -94,6 +94,7 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
     }
 
 
+    //--  OnCurrencyClickListener  --
     override fun onItemClicked(id: Int?) {
         Timber.d("qwer onItemClicked")
     }
