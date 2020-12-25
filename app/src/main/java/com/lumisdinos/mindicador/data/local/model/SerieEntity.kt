@@ -11,7 +11,7 @@ import com.lumisdinos.mindicador.data.Constants.ID
 @Entity(tableName = "serie")
 data class SerieEntity @JvmOverloads constructor(
     @PrimaryKey @ColumnInfo(name = ID) val id: Int? = 0,
-    @PrimaryKey @ColumnInfo(name = CURRENCY_ID) val currencyId: Int? = 0,
+    @ColumnInfo(name = CURRENCY_ID) val currencyId: Int? = 0,
     @ColumnInfo(name = CURRENCY_FECHA) val fecha: String? = "",
     @ColumnInfo(name = CURRENCY_VALOR) val valor: Double? = 0.0
 )
