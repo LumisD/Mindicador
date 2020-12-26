@@ -9,26 +9,26 @@ class CurrencyDataMapper @Inject constructor() {
 
     fun CurrencyEntry.fromDataToDomain() = CurrencyModel(
         //todo: pass id?
-        id = null,
+        //id = null,
         codigo = codigo,
         nombre = nombre,
-        unidadMedida = unidadMedida,
+        unidadMedida = unidad_medida,
         fecha = fecha,
         valor = valor
     )
 
     fun CurrencyEntry.fromDataToEntity() = CurrencyEntity(
         //todo: pass id?
-        id = null,
+        //id = null,
         codigo = codigo,
         nombre = nombre,
-        unidadMedida = unidadMedida,
+        unidadMedida = unidad_medida,
         fecha = fecha,
         valor = valor
     )
 
     fun CurrencyEntity.fromEntityToDomain() = CurrencyModel(
-        id = id,
+        //id = id,
         codigo = codigo,
         nombre = nombre,
         unidadMedida = unidadMedida,
@@ -37,7 +37,7 @@ class CurrencyDataMapper @Inject constructor() {
     )
 
     fun CurrencyModel.fromDomainToEntity() = CurrencyEntity(
-        id = id,
+        //id = id,
         codigo = codigo,
         nombre = nombre,
         unidadMedida = unidadMedida,

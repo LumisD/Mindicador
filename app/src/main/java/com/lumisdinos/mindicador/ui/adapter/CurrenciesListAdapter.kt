@@ -9,6 +9,7 @@ import com.lumisdinos.mindicador.common.util.isClickedShort
 import com.lumisdinos.mindicador.common.util.numbToStr
 import com.lumisdinos.mindicador.databinding.ItemCurrencyBinding
 import com.lumisdinos.mindicador.ui.model.CurrencyView
+import timber.log.Timber
 
 class CurrenciesListAdapter(private val itemClickListener: OnCurrencyClickListener) :
     ListAdapter<CurrencyView, CurrenciesListAdapter.ViewHolder>(CurrencyDiffCallback()) {
@@ -26,13 +27,14 @@ class CurrenciesListAdapter(private val itemClickListener: OnCurrencyClickListen
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: CurrencyView, clickListener: OnCurrencyClickListener) {
+            Timber.d("qwer bind nombre: %s, unidadMedida: %s, valor: %s", item.nombre, item.unidadMedida, item.valor)
             binding.nameTv.text = item.nombre
             binding.unitTv.text = item.unidadMedida
             binding.priceTv.text = numbToStr(item.valor)
 
             binding.root.setOnClickListener {
                 if (isClickedShort()) return@setOnClickListener
-                clickListener.onItemClicked(item.id)
+                clickListener.onItemClicked(item.codigo)
             }
         }
 
@@ -49,14 +51,14 @@ class CurrenciesListAdapter(private val itemClickListener: OnCurrencyClickListen
 
 interface OnCurrencyClickListener {
 
-    fun onItemClicked(id: Int?)
+    fun onItemClicked(codigo: String?)
 
 }
 
 
 class CurrencyDiffCallback : DiffUtil.ItemCallback<CurrencyView>() {
     override fun areItemsTheSame(oldItem: CurrencyView, newItem: CurrencyView): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.codigo == newItem.codigo
     }
 
     override fun areContentsTheSame(oldItem: CurrencyView, newItem: CurrencyView): Boolean {

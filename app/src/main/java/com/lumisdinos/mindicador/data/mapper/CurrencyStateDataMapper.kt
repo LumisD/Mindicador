@@ -7,17 +7,19 @@ import javax.inject.Inject
 
 class CurrencyStateDataMapper @Inject constructor() {
 
-    fun CurrencyStateEntity.fromEntityToDomain(currencies: List<CurrencyModel>) = CurrencyStateModel(
-        currencies = currencies,
-        isCurrenciesUpdated = isCurrenciesUpdated,
-        updateTime = updateTime,
-        errorMessage = errorMessage
-    )
+    fun CurrencyStateEntity.fromEntityToDomain() =
+        CurrencyStateModel(
+            updateTime = updateTime,
+            errorMessage = errorMessage//,
+            //isCurrenciesUpdated = isCurrenciesUpdated,
+            //isErrorMessageNotShown = isErrorMessageNotShown
+        )
 
     fun CurrencyStateModel.fromDomainToEntity() = CurrencyStateEntity(
-        isCurrenciesUpdated = isCurrenciesUpdated,
         updateTime = updateTime,
-        errorMessage = errorMessage
+        errorMessage = errorMessage//,
+        //isCurrenciesUpdated = isCurrenciesUpdated,
+        //isErrorMessageNotShown = isErrorMessageNotShown
     )
 
 }

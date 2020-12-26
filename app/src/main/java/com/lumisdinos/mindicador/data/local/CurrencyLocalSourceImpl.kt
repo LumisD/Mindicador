@@ -7,35 +7,35 @@ class CurrencyLocalSourceImpl @Inject constructor(
     private val currencyDao: CurrencyDao
 ) : CurrencyLocalSource {
 
-    override suspend  fun getAllCurrencies(): List<CurrencyEntity> {
+    override fun getAllCurrencies(): List<CurrencyEntity> {
         return currencyDao.getAllCurrencies()
     }
 
-    override suspend  fun getCurrency(currencyId: Int): CurrencyEntity? {
-        return currencyDao.getCurrency(currencyId)
+    override fun getCurrency(codigo: String): CurrencyEntity? {
+        return currencyDao.getCurrency(codigo)
     }
 
-    override suspend  fun insertAllCurrencies(currencies: List<CurrencyEntity>) {
+    override fun insertAllCurrencies(currencies: List<CurrencyEntity>) {
         currencyDao.insertAllCurrencies(currencies)
     }
 
-    override suspend  fun insertCurrency(currency: CurrencyEntity) {
+    override fun insertCurrency(currency: CurrencyEntity) {
         currencyDao.insertCurrency(currency)
     }
 
-    override suspend  fun deleteCurrency(currencyId: Int) {
-        currencyDao.deleteCurrency(currencyId)
+    override fun deleteCurrency(codigo: String) {
+        currencyDao.deleteCurrency(codigo)
     }
 
-    override suspend  fun deleteAllCurrencies() {
+    override fun deleteAllCurrencies() {
         currencyDao.deleteAllCurrencies()
     }
 
-    override suspend  fun getMaxIdCurrency(): Int {
-        return currencyDao.getMaxIdCurrency()
-    }
+//    override fun getMaxIdCurrency(): Int {
+//        return currencyDao.getMaxIdCurrency()
+//    }
 
-    override suspend  fun getCurrencyCount(): Int {
+    override fun getCurrencyCount(): Int {
         return currencyDao.getCurrencyCount()
     }
 

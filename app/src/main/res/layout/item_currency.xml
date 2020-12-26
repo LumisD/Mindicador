@@ -8,13 +8,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/list_item_padding"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/list_item_padding">
+    android:paddingBottom="@dimen/list_item_padding"
+    android:foreground="@drawable/ripple">
 
     <TextView
         android:id="@+id/nameTv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:foreground="@drawable/ripple"
         android:paddingStart="@dimen/space_none"
         android:paddingEnd="@dimen/space_normal"
         android:textColor="@color/black_text"
@@ -23,19 +23,18 @@
     <TextView
         android:id="@+id/unitTv"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:foreground="@drawable/ripple"
         android:textColor="@color/black_text"
         android:textSize="@dimen/material_text_body" />
 
     <TextView
         android:id="@+id/priceTv"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/unitTv"
-        android:foreground="@drawable/ripple"
+        android:layout_alignParentBottom="true"
         android:textColor="@color/black_text"
         android:textSize="@dimen/material_text_subhead" />
 

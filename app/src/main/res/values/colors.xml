@@ -21,6 +21,19 @@
     <color name="nav_bar_start_bg">#FFF6CA</color>
     <color name="nav_bar_center_bg">#FFD566</color>
     <color name="nav_bar_end_bg">#FFC044</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorGray">#C0C0C0</color>
+    <color name="colorBackgroundWhite">#FFFFFF</color>
+    <color name="bg_green">#008500</color>
+    <color name="bg_red">#ff0000</color>
+    <color name="bg_yellow">#eeee00</color>
+    <color name="bg_blue">#15a4fa</color>
+    <color name="table_cell_background">#F0EFEF</color>
+    <color name="combined_background_1">#D0DFDF</color>
+    <color name="combined_background_2">#C0CFC0</color>
+    <color name="colorGrayTransparent">#bbC0C0C0</color>
+    <color name="colorGreenTransparent">#bb008500</color>
+    <color name="colorWhiteTransparent">#E0FFFFFF</color>
 
     <!--    Texts-->
     <color name="black_text">#000000</color>

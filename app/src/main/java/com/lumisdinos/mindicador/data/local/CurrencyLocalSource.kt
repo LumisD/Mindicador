@@ -4,20 +4,20 @@ import com.lumisdinos.mindicador.data.local.model.CurrencyEntity
 
 interface CurrencyLocalSource {
 
-    suspend fun getAllCurrencies(): List<CurrencyEntity>
+    fun getAllCurrencies(): List<CurrencyEntity>
 
-    suspend fun getCurrency(currencyId: Int): CurrencyEntity?
+    fun getCurrency(codigo: String): CurrencyEntity?
 
-    suspend fun insertAllCurrencies(currencies: List<CurrencyEntity>)
+    fun insertAllCurrencies(currencies: List<CurrencyEntity>)
 
-    suspend fun insertCurrency(currency: CurrencyEntity)
+    fun insertCurrency(currency: CurrencyEntity)
 
-    suspend fun deleteCurrency(currencyId: Int)
+    fun deleteCurrency(codigo: String)
 
-    suspend fun deleteAllCurrencies()
+    fun deleteAllCurrencies()
 
-    suspend fun getMaxIdCurrency(): Int
+    //fun getMaxIdCurrency(): Int
 
-    suspend fun getCurrencyCount(): Int
+    fun getCurrencyCount(): Int
 
 }

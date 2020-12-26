@@ -19,4 +19,6 @@ object Constants {
     const val DATE_FORMAT_FROM = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"//"2020-12-22T03:00:00.000Z"
     const val DATE_FORMAT_TO = "dd-MM-yy"                      //22-12-20
 
+    const val WRONG_SERVER_DATA = "Server sent wrong data"
+
 }

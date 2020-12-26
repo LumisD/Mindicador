@@ -15,6 +15,15 @@ fun strToInt(string: String, default: Int = 0): Int {
 }
 
 
+fun strToDouble(string: String, default: Double = 0.0): Double {
+    return try {
+        string.toDouble()
+    } catch (nfe: NumberFormatException) {
+        default
+    }
+}
+
+
 fun numbToStr(number: Number?, default: String = "0"): String {
     return try {
         number.toString()

@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface CurrencyStateRepository {
 
-    fun getCurrencyState(): Flow<CurrencyStateModel>
+    fun getCurrencyStateFlow(): Flow<CurrencyStateModel>
+
+    fun getCurrencyState(): CurrencyStateModel
 
     fun insertCurrencyState(currencyState: CurrencyStateModel)
 

@@ -12,8 +12,8 @@ import com.lumisdinos.mindicador.data.Constants.ID
 
 @Entity(tableName = "currency")
 data class CurrencyEntity @JvmOverloads constructor(
-    @PrimaryKey @ColumnInfo(name = ID) val id: Int? = 0,
-    @ColumnInfo(name = CURRENCY_CODIGO) val codigo: String? = "",
+    //@PrimaryKey @ColumnInfo(name = ID) val id: Int? = 0,
+    @PrimaryKey @ColumnInfo(name = CURRENCY_CODIGO) val codigo: String = "",
     @ColumnInfo(name = CURRENCY_NOMBRE) val nombre: String? = "",
     @ColumnInfo(name = CURRENCY_UNIDAD_MEDIDA) val unidadMedida: String? = "",
     @ColumnInfo(name = CURRENCY_FECHA) val fecha: String? = "",

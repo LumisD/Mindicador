@@ -18,23 +18,16 @@ class CurrencyLogicRepositoryImpl @Inject constructor(
     var currencyState = CurrencyStateModel()
     private var currency: CurrencyModel? = null
 
-
-    override fun getCurrencyState(): Flow<CurrencyStateModel> {
-        Timber.d("qwer getCurrencyState")
-        val state = currencyStateRepo.getCurrencyState()
-        return state
-    }
-
-
-    override fun downloadCurrencies() {
-        Timber.d("qwer downloadCurrencies")
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO) {
-                currencyRepo.getAllCurrencies()
-            }
-        }
-    }
-
+//    override fun getCurrencyStateFlow(): Flow<CurrencyStateModel> {
+//        Timber.d("qwer getCurrencyStateFlow")
+//        val state = currencyStateRepo.getCurrencyStateFlow()
+//        return state
+//    }
+//
+//    override fun getCurrenciesFlow(): Flow<List<CurrencyModel>> {
+//        Timber.d("qwer getCurrenciesFlow")
+//        return currencyRepo.getCurrenciesFlow()
+//    }
 
     override fun filterByCodigoOrName(value: String) {
         Timber.d("qwer filterByCodigoOrName")
@@ -44,19 +37,13 @@ class CurrencyLogicRepositoryImpl @Inject constructor(
         Timber.d("qwer orderCurrencies")
     }
 
-
-    override fun currenciesAreRendered() {
-        Timber.d("qwer currenciesAreRendered")
+    override fun messageIsShown() {
+        Timber.d("qwer messageIsShown")
         CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO) { setStateCurrencies(currencyState.currencies, false) }
-        }
-    }
-
-    private suspend fun setStateCurrencies(currencies: List<CurrencyModel>, isCurrenciesNew: Boolean = true) {
-        Timber.d("qwer setStateCurrencies")
-        withContext(Dispatchers.IO) {
-            currencyState = currencyState.copy(currencies = currencies, isCurrenciesUpdated = isCurrenciesNew)
-            currencyStateRepo.insertCurrencyState(currencyState)
+            withContext(Dispatchers.IO) {
+                currencyState = currencyState.copy(errorMessage = null)
+                currencyStateRepo.insertCurrencyState(currencyState)
+            }
         }
     }
 

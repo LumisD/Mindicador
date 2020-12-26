@@ -1,10 +1,17 @@
 package com.lumisdinos.mindicador.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.snackbar.Snackbar
+import com.lumisdinos.mindicador.R
 import com.lumisdinos.mindicador.databinding.FragmentListHomeBinding
 import com.lumisdinos.mindicador.domain.model.CurrencyModel
 import com.lumisdinos.mindicador.domain.model.CurrencyStateModel
@@ -49,7 +56,9 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupListAdapter()
+        Timber.d("qwer onActivityCreated -> viewModel.currencyState.observe")
         viewModel.currencyState.observe(viewLifecycleOwner, { render(it) })
+        viewModel.currencies.observe(viewLifecycleOwner, { updateCurrencies(it) })
     }
 
 
@@ -72,13 +81,29 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 
 
     private fun render(currencyState: CurrencyStateModel) {
-        if (currencyState.isCurrenciesUpdated) updateCurrencies(currencyState.currencies)
+        if (!currencyState.errorMessage.isNullOrEmpty()) showSnackBar(currencyState.errorMessage)
     }
 
 
     private fun updateCurrencies(currencies: List<CurrencyModel>) {
-        viewModel.currenciesAreRendered()
         listAdapter?.submitList(viewModel.convertCurrencyModelsToCurrencyViews(currencies))
+    }
+
+    private fun showSnackBar(message: String) {
+        Timber.d("qwer showSnackBar message: %s", message)
+        viewModel.messageIsShown()
+        val snackBar = Snackbar.make(
+            viewBinding?.root!!, message,
+            Snackbar.LENGTH_LONG
+        ).setAction("Try again!") { viewModel.downloadCurrencies() }
+        snackBar.setActionTextColor(Color.BLUE)
+        snackBar.setTextColor(getColor(requireContext(), R.color.black_text))
+        val snackBarView = snackBar.view
+        snackBarView.setBackgroundColor(Color.CYAN)
+//        val textView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+//        textView.setTextColor(Color.BLUE)
+        snackBar.show()
+
     }
 
 
@@ -95,7 +120,7 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 
 
     //--  OnCurrencyClickListener  --
-    override fun onItemClicked(id: Int?) {
+    override fun onItemClicked(codigo: String?) {
         Timber.d("qwer onItemClicked")
     }
 

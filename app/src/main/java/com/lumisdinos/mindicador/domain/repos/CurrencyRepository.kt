@@ -1,22 +1,26 @@
 package com.lumisdinos.mindicador.domain.repos
 
 import com.lumisdinos.mindicador.domain.model.CurrencyModel
+import com.lumisdinos.mindicador.domain.model.CurrencyStateModel
+import kotlinx.coroutines.flow.Flow
 
 interface CurrencyRepository {
 
-    suspend fun getAllCurrencies(): List<CurrencyModel>
+    fun getCurrenciesFlow(): Flow<List<CurrencyModel>>
 
-    suspend fun getCurrency(currencyId: Int)//: CurrencyModel?
+    suspend fun getAllCurrencies(forceUpdate: Boolean): List<CurrencyModel>
 
-    suspend fun insertAllCurrencies(currencies: List<CurrencyModel>)
+    fun getCurrency(codigo: String): CurrencyModel?
 
-    suspend fun insertCurrency(currency: CurrencyModel)
+    fun insertAllCurrencies(currencies: List<CurrencyModel>)
 
-    suspend fun deleteCurrency(currencyId: Int)
+    fun insertCurrency(currency: CurrencyModel)
 
-    suspend fun deleteAllCurrencies()
+    fun deleteCurrency(codigo: String)
 
-    suspend fun getMaxIdCurrency(): Int
+    fun deleteAllCurrencies()
 
-    suspend fun getCurrencyCount(): Int
+    //fun getMaxIdCurrency(): Int
+
+    fun getCurrencyCount(): Int
 }
