@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lumisdinos.mindicador.databinding.FragmentDetailBinding
 import com.lumisdinos.mindicador.domain.model.SerieModel
@@ -23,6 +24,7 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
 
     private var viewBinding: FragmentDetailBinding? = null
     private val viewModel by viewModels<DetailViewModel> { viewModelFactory }
+    private val args: DetailFragmentArgs by navArgs()
     private var listAdapter: SeriesListAdapter? = null
 
     override fun onCreateView(
@@ -40,7 +42,7 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("qwer onViewCreated -> downloadCurrencies")
-        viewModel.downloadSeriesByCurrencyId(0)//todo: set meaningful id
+        viewModel.downloadSeriesByCurrencyId(args.currencyCode)//todo: set meaningful id
     }
 
 

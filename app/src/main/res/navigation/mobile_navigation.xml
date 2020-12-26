@@ -8,12 +8,24 @@
         android:id="@+id/navListHome"
         android:name="com.lumisdinos.mindicador.ui.fragment.HomeListFragment"
         android:label="@string/currency"
-        tools:layout="@layout/fragment_list_home" />
+        tools:layout="@layout/fragment_list_home">
+        <action
+            android:id="@+id/actionHomeListToDetailFragment"
+            app:destination="@id/navDetail"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/navDetail"
         android:name="com.lumisdinos.mindicador.ui.fragment.DetailFragment"
         android:label="@string/details"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="currencyCode"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

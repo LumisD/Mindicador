@@ -26,8 +26,8 @@ class DetailViewModel @Inject constructor(
         }
         .asLiveData()
 
-    fun downloadSeriesByCurrencyId(currencyId: Int) {
-        serieLogicRepo.downloadSeriesByCurrencyId(currencyId)
+    fun downloadSeriesByCurrencyId(currencyCode: String) {
+        //serieLogicRepo.downloadSeriesByCurrencyId(currencyId)
     }
 
     fun share() {

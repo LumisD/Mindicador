@@ -9,6 +9,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.lumisdinos.mindicador.R
@@ -195,6 +196,13 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
     //--  OnCurrencyClickListener  --
     override fun onItemClicked(codigo: String?) {
         Timber.d("qwer onItemClicked")
+        codigo?.let {
+            val action = HomeListFragmentDirections.actionHomeListToDetailFragment(it)
+            findNavController().currentDestination?.getAction(action.actionId)?.let {
+                findNavController().navigate(action)
+            }
+        }
+
     }
 
 }
