@@ -2,9 +2,8 @@ package com.lumisdinos.mindicador.ui.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.viewModels
@@ -12,6 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.lumisdinos.mindicador.R
+import com.lumisdinos.mindicador.common.extension.hideKeyboard
+import com.lumisdinos.mindicador.common.extension.showKeyboard
+import com.lumisdinos.mindicador.common.util.isClickedSingle
 import com.lumisdinos.mindicador.databinding.FragmentListHomeBinding
 import com.lumisdinos.mindicador.domain.model.CurrencyModel
 import com.lumisdinos.mindicador.domain.model.CurrencyStateModel
@@ -44,13 +46,11 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
         return view
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("qwer onViewCreated -> downloadCurrencies")
         viewModel.downloadCurrencies()
     }
-
 
     @ExperimentalCoroutinesApi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -60,6 +60,52 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
         viewModel.currencyState.observe(viewLifecycleOwner, { render(it) })
         viewModel.currencies.observe(viewLifecycleOwner, { updateCurrencies(it) })
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_home_list, menu)
+        filterCurrencies(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_filter -> {
+                Timber.d("qwer action_switch_order clicked")
+                if (isClickedSingle()) return true
+                showKeyboard()
+                return true
+            }
+            R.id.action_switch_order -> {
+                Timber.d("qwer action_switch_order clicked")
+                if (isClickedSingle()) return true
+
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun filterCurrencies(menu: Menu) {
+        val search = menu.findItem(R.id.action_filter)
+        val searchView = search.actionView as SearchView
+        searchView.queryHint = getString(R.string.codigo_o_nombre)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Timber.d("qwer onQueryTextSubmit")
+                searchView.clearFocus()// close the keyboard on load todo: don't work
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                Timber.d("qwer onQueryTextChange")
+                listAdapter?.filter(newText)
+                if (newText.isNullOrEmpty()) {
+                    hideKeyboard()//todo:
+                }
+                return true
+            }
+
+        })
+    }
+
 
 
 //    override fun onResume() {
@@ -86,7 +132,7 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 
 
     private fun updateCurrencies(currencies: List<CurrencyModel>) {
-        listAdapter?.submitList(viewModel.convertCurrencyModelsToCurrencyViews(currencies))
+        listAdapter?.modifyList(viewModel.convertCurrencyModelsToCurrencyViews(currencies))
     }
 
     private fun showSnackBar(message: String) {

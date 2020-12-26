@@ -8,7 +8,9 @@
         android:icon="@drawable/ic_search"
         android:orderInCategory="10"
         android:title="@string/filter"
-        app:showAsAction="always" />
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+
 
     <item
         android:id="@+id/action_switch_order"

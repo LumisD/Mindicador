@@ -10,9 +10,12 @@ import com.lumisdinos.mindicador.common.util.numbToStr
 import com.lumisdinos.mindicador.databinding.ItemCurrencyBinding
 import com.lumisdinos.mindicador.ui.model.CurrencyView
 import timber.log.Timber
+import java.util.*
 
 class CurrenciesListAdapter(private val itemClickListener: OnCurrencyClickListener) :
     ListAdapter<CurrencyView, CurrenciesListAdapter.ViewHolder>(CurrencyDiffCallback()) {
+
+    private var unfilteredlist = listOf<CurrencyView>()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
@@ -45,6 +48,26 @@ class CurrenciesListAdapter(private val itemClickListener: OnCurrencyClickListen
                 return ViewHolder(binding)
             }
         }
+    }
+
+    fun modifyList(list : List<CurrencyView>) {
+        unfilteredlist = list
+        submitList(list)
+    }
+
+    fun filter(query: CharSequence?) {
+        val list = mutableListOf<CurrencyView>()
+
+        if(!query.isNullOrEmpty()) {
+            list.addAll(unfilteredlist.filter {
+                it.codigo?.toLowerCase(Locale.getDefault())?.contains(query.toString().toLowerCase(Locale.getDefault())) ?: false ||
+                        it.nombre?.toLowerCase(Locale.getDefault())?.contains(query.toString().toLowerCase(Locale.getDefault())) ?: false
+            })
+        } else {
+            list.addAll(unfilteredlist)
+        }
+
+        submitList(list)
     }
 }
 
