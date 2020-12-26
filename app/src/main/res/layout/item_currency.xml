@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_yellow_faint"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -13,19 +14,28 @@
 
     <TextView
         android:id="@+id/nameTv"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:paddingStart="@dimen/space_none"
         android:paddingEnd="@dimen/space_normal"
         android:textColor="@color/black_text"
-        android:textSize="@dimen/material_text_subhead" />
+        android:textSize="@dimen/material_text_subhead"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/barrier"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="unitTv,priceTv" />
 
     <TextView
         android:id="@+id/unitTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@color/black_text"
         android:textSize="@dimen/material_text_body" />
 
@@ -33,9 +43,9 @@
         android:id="@+id/priceTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@color/black_text"
         android:textSize="@dimen/material_text_subhead" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
