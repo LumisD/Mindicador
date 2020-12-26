@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CurrencyRepository {
 
-    fun getCurrenciesFlow(): Flow<List<CurrencyModel>>
+    //fun getCurrenciesFlow(): Flow<List<CurrencyModel>>
 
     suspend fun getAllCurrencies(forceUpdate: Boolean): List<CurrencyModel>
 

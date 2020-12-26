@@ -6,13 +6,8 @@ import com.lumisdinos.mindicador.data.local.CurrencyLocalSource
 import com.lumisdinos.mindicador.data.mapper.CurrencyDataMapper
 import com.lumisdinos.mindicador.data.remote.CurrencyRemoteSource
 import com.lumisdinos.mindicador.domain.model.CurrencyModel
-import com.lumisdinos.mindicador.domain.model.CurrencyStateModel
 import com.lumisdinos.mindicador.domain.repos.CurrencyRepository
 import com.lumisdinos.mindicador.domain.repos.CurrencyStateRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,18 +18,6 @@ class CurrencyDataRepository @Inject constructor(
     private val currencyStateRepo: CurrencyStateRepository,
     private val currencyMapper: CurrencyDataMapper
 ) : CurrencyRepository {
-
-    override fun getCurrenciesFlow(): Flow<List<CurrencyModel>> {
-        Timber.d("qwer getCurrenciesFlow")
-        return currencyDao.getCurrenciesFlow().map {it.map { with(currencyMapper){
-            Timber.d("qwer getCurrenciesFlow it: %s", it)
-            val item = it.fromEntityToDomain()
-            Timber.d("qwer getCurrenciesFlow item: %s", item)
-            item
-        }
-
-        }  }
-    }
 
     override suspend fun getAllCurrencies(forceUpdate: Boolean): List<CurrencyModel> {
         Timber.d("qwer getAllCurrencies")

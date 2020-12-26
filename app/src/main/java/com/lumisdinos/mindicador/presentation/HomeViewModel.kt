@@ -31,33 +31,32 @@ class HomeViewModel @Inject constructor(
         }
         .asLiveData()
 
-    @ExperimentalCoroutinesApi
-    val currencies: LiveData<List<CurrencyModel>> = currencyRepo
-        .getCurrenciesFlow()
-        .catch {
-            Timber.d("qwer getCurrenciesFlow catch: %s", it.message)
-        }
-        .asLiveData()
+    private val _currencies: MutableLiveData<List<CurrencyModel>> = MutableLiveData<List<CurrencyModel>>()
+    val currencies: LiveData<List<CurrencyModel>> = _currencies
 
     fun downloadCurrencies() {
         Timber.d("qwer downloadCurrencies")
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
-                currencyRepo.getAllCurrencies(true)
+                _currencies.postValue(currencyRepo.getAllCurrencies(true))
             }
         }
     }
 
-    fun filterByCodigoOrName(value: String) {
-        currencyLogicRepo.filterByCodigoOrName(value)
-    }
-
-    fun orderCurrencies(isAscending: Boolean) {
-        currencyLogicRepo.orderCurrencies(isAscending)
+    fun changeOrder() {
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                _currencies.postValue(currencyLogicRepo.changeOrder())
+            }
+        }
     }
 
     fun messageIsShown() {
-        currencyLogicRepo.messageIsShown()
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                currencyLogicRepo.messageIsShown()
+            }
+        }
     }
 
     fun convertCurrencyModelsToCurrencyViews(currencyModels: List<CurrencyModel>): List<CurrencyView> {
