@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mindicador"
         tools:ignore="AllowBackup">
-        <activity android:name=".ui.activity.MainActivity">
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

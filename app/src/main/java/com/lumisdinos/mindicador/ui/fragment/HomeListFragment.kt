@@ -1,5 +1,6 @@
 package com.lumisdinos.mindicador.ui.fragment
 
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -61,6 +62,11 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
         Timber.d("qwer onActivityCreated -> viewModel.currencyState.observe")
         viewModel.currencyState.observe(viewLifecycleOwner, { render(it) })
         viewModel.currencies.observe(viewLifecycleOwner, { updateCurrencies(it) })
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        Timber.d("qwer onConfigurationChanged")
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
