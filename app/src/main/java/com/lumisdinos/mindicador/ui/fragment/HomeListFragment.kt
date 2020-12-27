@@ -84,9 +84,13 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 //                return true
 //            }
             R.id.action_switch_order -> {
-                Timber.d("qwer action_switch_order clicked")
                 if (isClickedShort()) return true
                 viewModel.changeOrder()
+                return true
+            }
+            R.id.action_update -> {
+                if (isClickedSingle()) return true
+                viewModel.downloadCurrencies()
                 return true
             }
         }

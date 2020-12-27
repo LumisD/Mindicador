@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.lumisdinos.mindicador.R
 import com.lumisdinos.mindicador.common.MessageType
-import com.lumisdinos.mindicador.common.util.isClickedShort
+import com.lumisdinos.mindicador.common.util.isClickedSingle
 import com.lumisdinos.mindicador.databinding.FragmentDetailBinding
 import com.lumisdinos.mindicador.domain.model.SerieModel
 import com.lumisdinos.mindicador.domain.model.SerieStateModel
@@ -66,9 +66,13 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share -> {
-                Timber.d("qwer action_share clicked")
-                if (isClickedShort()) return true
+                if (isClickedSingle()) return true
                 viewModel.share()
+                return true
+            }
+            R.id.action_update -> {
+                if (isClickedSingle()) return true
+                viewModel.downloadSeriesByCurrencyCode()
                 return true
             }
         }
