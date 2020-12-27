@@ -19,6 +19,7 @@ import com.lumisdinos.mindicador.domain.model.SerieStateModel
 import com.lumisdinos.mindicador.presentation.DetailViewModel
 import com.lumisdinos.mindicador.ui.adapter.OnSerieClickListener
 import com.lumisdinos.mindicador.ui.adapter.SeriesListAdapter
+import com.lumisdinos.mindicador.ui.util.showSnackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
@@ -97,17 +98,8 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
     }
 
     private fun showErrorInSnackBar(message: String) {
-        Timber.d("qwer showErrorInSnackBar message: %s", message)
         viewModel.messageIsShown(MessageType.ERROR.name)
-        val snackBar = Snackbar.make(
-            viewBinding?.root!!, message,
-            Snackbar.LENGTH_LONG
-        ).setAction("Try again!") { viewModel.downloadSeriesByCurrencyCode() }
-        snackBar.setActionTextColor(Color.BLUE)
-        snackBar.setTextColor(ContextCompat.getColor(requireContext(), R.color.black_text))
-        val snackBarView = snackBar.view
-        snackBarView.setBackgroundColor(Color.CYAN)
-        snackBar.show()
+        showSnackbar(viewBinding?.root!!, message, requireContext(), viewModel::downloadSeriesByCurrencyCode)
     }
 
     private fun share(message: String) {

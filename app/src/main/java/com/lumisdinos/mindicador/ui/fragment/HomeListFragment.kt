@@ -23,6 +23,7 @@ import com.lumisdinos.mindicador.domain.model.CurrencyStateModel
 import com.lumisdinos.mindicador.presentation.HomeViewModel
 import com.lumisdinos.mindicador.ui.adapter.CurrenciesListAdapter
 import com.lumisdinos.mindicador.ui.adapter.OnCurrencyClickListener
+import com.lumisdinos.mindicador.ui.util.showSnackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
@@ -136,19 +137,8 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
     }
 
     private fun showSnackBar(message: String) {
-        Timber.d("qwer showSnackBar message: %s", message)
         viewModel.messageIsShown()
-        val snackBar = Snackbar.make(
-            viewBinding?.root!!, message,
-            Snackbar.LENGTH_LONG
-        ).setAction("Try again!") { viewModel.downloadCurrencies() }
-        snackBar.setActionTextColor(Color.BLUE)
-        snackBar.setTextColor(getColor(requireContext(), R.color.black_text))
-        val snackBarView = snackBar.view
-        snackBarView.setBackgroundColor(Color.CYAN)
-//        val textView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-//        textView.setTextColor(Color.BLUE)
-        snackBar.show()
+        showSnackbar(viewBinding?.root!!, message, requireContext(), viewModel::downloadCurrencies)
     }
 
     private fun setOrderIcon(order: String?) {
