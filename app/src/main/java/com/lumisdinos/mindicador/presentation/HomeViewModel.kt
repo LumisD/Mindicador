@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.catch
 import timber.log.Timber
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class HomeViewModel @Inject constructor(
     private val currencyLogicRepo: CurrencyLogicRepository,
     private val currencyRepo: CurrencyRepository,
@@ -23,8 +24,7 @@ class HomeViewModel @Inject constructor(
     private val currencyViewMapper: CurrencyViewMapper
 ) : ViewModel() {
 
-    @ExperimentalCoroutinesApi
-    val currencyState: LiveData<CurrencyStateModel> = currencyStateRepo
+    val currencyState: LiveData<CurrencyStateModel?> = currencyStateRepo
         .getCurrencyStateFlow()
         .catch {
             Timber.d("qwer getCurrencyStateFlow catch: %s", it.message)

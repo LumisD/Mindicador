@@ -24,6 +24,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class DetailFragment : DaggerFragment(), OnSerieClickListener {
 
     @Inject
@@ -48,10 +49,9 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("qwer onViewCreated -> downloadCurrencies")
-        viewModel.downloadSeriesByCurrencyId(args.currencyCode)
+        viewModel.downloadSeriesByCurrencyCode(args.currencyCode)
     }
 
-    @ExperimentalCoroutinesApi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupListAdapter()
@@ -80,10 +80,12 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
         viewBinding = null
     }
 
-    private fun render(serieState: SerieStateModel) {
+    private fun render(serieState: SerieStateModel?) {
         Timber.d("qwer render serieState: %s", serieState)
-        if (!serieState.errorMessage.isNullOrEmpty()) showErrorInSnackBar(serieState.errorMessage)
-        if (!serieState.sharedMessage.isNullOrEmpty()) share(serieState.sharedMessage)
+        serieState?.let {
+            if (!it.errorMessage.isNullOrEmpty()) showErrorInSnackBar(it.errorMessage)
+            if (!it.sharedMessage.isNullOrEmpty()) share(it.sharedMessage)
+        }
     }
 
     private fun updateSeries(series: List<SerieModel>) {
@@ -96,7 +98,7 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
         val snackBar = Snackbar.make(
             viewBinding?.root!!, message,
             Snackbar.LENGTH_LONG
-        ).setAction("Try again!") { viewModel.downloadSeriesByCurrencyId() }
+        ).setAction("Try again!") { viewModel.downloadSeriesByCurrencyCode() }
         snackBar.setActionTextColor(Color.BLUE)
         snackBar.setTextColor(ContextCompat.getColor(requireContext(), R.color.black_text))
         val snackBarView = snackBar.view

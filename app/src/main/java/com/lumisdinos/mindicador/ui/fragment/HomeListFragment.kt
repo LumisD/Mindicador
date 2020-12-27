@@ -28,6 +28,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 
     @Inject
@@ -55,7 +56,6 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
         viewModel.downloadCurrencies()
     }
 
-    @ExperimentalCoroutinesApi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupListAdapter()
@@ -120,9 +120,11 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
         viewBinding = null
     }
 
-    private fun render(currencyState: CurrencyStateModel) {
-        if (!currencyState.errorMessage.isNullOrEmpty()) showSnackBar(currencyState.errorMessage)
-        setOrderIcon(currencyState.order)
+    private fun render(currencyState: CurrencyStateModel?) {
+        currencyState?.let {
+            if (!it.errorMessage.isNullOrEmpty()) showSnackBar(it.errorMessage)
+            setOrderIcon(it.order)
+        }
     }
 
     private fun updateCurrencies(currencies: List<CurrencyModel>) {

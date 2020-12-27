@@ -11,7 +11,7 @@ interface CurrencyDao {
     //CurrencyState
 
     @Query("SELECT * FROM currency_state")
-    fun getCurrencyStateFlow(): Flow<CurrencyStateEntity>
+    fun getCurrencyStateFlow(): Flow<CurrencyStateEntity?>
 
     @Query("SELECT * FROM currency_state")
     fun getCurrencyState(): CurrencyStateEntity?

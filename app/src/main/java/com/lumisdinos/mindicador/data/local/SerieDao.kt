@@ -11,7 +11,7 @@ interface SerieDao {
     //SerieState
 
     @Query("SELECT * FROM serie_state WHERE codigo = :currencyCode")
-    fun getSerieStateFlow(currencyCode: String): Flow<SerieStateEntity>
+    fun getSerieStateFlow(currencyCode: String): Flow<SerieStateEntity?>
 
     @Query("SELECT * FROM serie_state WHERE codigo = :currencyCode")
     fun getSerieState(currencyCode: String): SerieStateEntity?

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SerieStateRepository {
 
-    fun getSerieStateFlow(currencyCode: String): Flow<SerieStateModel>
+    fun getSerieStateFlow(currencyCode: String): Flow<SerieStateModel?>
 
     fun getSerieState(currencyCode: String): SerieStateModel?
 

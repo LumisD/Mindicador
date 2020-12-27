@@ -4,19 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.lumisdinos.mindicador.domain.model.CurrencyStateModel
 import com.lumisdinos.mindicador.domain.model.SerieModel
-import com.lumisdinos.mindicador.domain.model.SerieStateModel
 import com.lumisdinos.mindicador.domain.repos.SerieLogicRepository
 import com.lumisdinos.mindicador.domain.repos.SerieRepository
 import com.lumisdinos.mindicador.domain.repos.SerieStateRepository
 import com.lumisdinos.mindicador.ui.mapper.SerieViewMapper
 import com.lumisdinos.mindicador.ui.model.SerieView
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.*
 import timber.log.Timber
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class DetailViewModel @Inject constructor(
     private val serieLogicRepo: SerieLogicRepository,
     private val serieRepo: SerieRepository,
@@ -25,37 +24,29 @@ class DetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var currCode = ""
-
-    @ExperimentalCoroutinesApi
-    var serieState: LiveData<SerieStateModel> = serieStateRepo
-        .getSerieStateFlow(currCode)
-        .catch {
-            Timber.d("qwer getSerieStateFlow catch: %s", it.message)
-        }
-        .asLiveData()
-
-    //var serieState: LiveData<SerieStateModel> = MutableLiveData<SerieStateModel>()
     private val _series: MutableLiveData<List<SerieModel>> = MutableLiveData<List<SerieModel>>()
     val series: LiveData<List<SerieModel>> = _series
 
+    private val currencyFlow = MutableStateFlow(currCode);
+    val serieState = currencyFlow.flatMapLatest {
+        serieStateRepo.getSerieStateFlow(currCode)
+    }.catch {
+        Timber.d("qwer getSerieStateFlow catch: %s", it.message)
+    }
+        .asLiveData(Dispatchers.IO);
 
-    @ExperimentalCoroutinesApi
-    fun downloadSeriesByCurrencyId(currencyCode: String = currCode) {
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO) {
-                currCode = currencyCode
-                setSerieState(currencyCode)
-                _series.postValue(serieRepo.getSerieForMonth(currencyCode,true))
-            }
-        }
+    fun setNewCurrencyForState(newCurrency: String) {
+        currCode = newCurrency
+        currencyFlow.value = newCurrency
     }
 
-    @ExperimentalCoroutinesApi
-    private fun setSerieState(currencyCode: String) {
-        Timber.d("qwer setSerieState")
-        serieState = serieStateRepo.getSerieStateFlow(currencyCode)
-            .catch { Timber.d("qwer getSerieState catch: %s", it.message) }
-            .asLiveData()
+    fun downloadSeriesByCurrencyCode(currencyCode: String = currCode) {
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                setNewCurrencyForState(currencyCode)
+                _series.postValue(serieRepo.getSerieForMonth(currencyCode, true))
+            }
+        }
     }
 
     fun share() {
