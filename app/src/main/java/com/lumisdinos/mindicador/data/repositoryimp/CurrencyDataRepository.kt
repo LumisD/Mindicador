@@ -79,10 +79,6 @@ class CurrencyDataRepository @Inject constructor(
         currencyLocal.deleteAllCurrencies()
     }
 
-//    override fun getMaxIdCurrency(): Int {
-//        return currencyLocal.getMaxIdCurrency()
-//    }
-
     override fun getCurrencyCount(): Int {
         return currencyLocal.getCurrencyCount()
     }

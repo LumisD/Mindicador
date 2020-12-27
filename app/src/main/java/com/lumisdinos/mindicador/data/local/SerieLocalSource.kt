@@ -1,20 +1,19 @@
 package com.lumisdinos.mindicador.data.local
 
 import com.lumisdinos.mindicador.data.local.model.SerieEntity
+import com.lumisdinos.mindicador.domain.model.SerieModel
 
 interface SerieLocalSource {
 
-    fun getSeriesByCurrencyId(currencyId: Int): List<SerieEntity>
+    fun getSeriesByCurrencyCode(currencyCode: String): List<SerieEntity>
 
-    fun getSerie(serieId: Int): SerieEntity?
+    fun replaceSeriesByCurrencyCode(currencyCode: String, series: List<SerieEntity>)
 
     fun insertAllSeries(series: List<SerieEntity>)
 
     fun insertSerie(serie: SerieEntity)
 
-    fun deleteSerie(serieId: Int)
-
-    fun deleteSeriesByCurrencyId(currencyId: Int)
+    fun deleteSeriesByCurrencyCode(currencyCode: String)
 
     fun deleteAllSeries()
 

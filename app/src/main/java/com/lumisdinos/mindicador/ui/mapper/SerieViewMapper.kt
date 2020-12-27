@@ -8,7 +8,7 @@ class SerieViewMapper @Inject constructor() {
 
     fun SerieModel.fromDomainToView() = SerieView(
         id = id,
-        currencyId = currencyId,
+        currencyCode = currencyCode,
         fecha = fecha,
         valor = valor
     )

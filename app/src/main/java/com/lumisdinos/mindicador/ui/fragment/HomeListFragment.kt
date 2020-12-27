@@ -28,7 +28,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 import javax.inject.Inject
 
-
 class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 
     @Inject
@@ -65,10 +64,10 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
         viewModel.currencies.observe(viewLifecycleOwner, { updateCurrencies(it) })
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        Timber.d("qwer onConfigurationChanged")
-    }
+//    override fun onConfigurationChanged(newConfig: Configuration) {
+//        super.onConfigurationChanged(newConfig)
+//        Timber.d("qwer onConfigurationChanged")
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_home_list, menu)
@@ -104,6 +103,7 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
                 searchView.clearFocus()// close the keyboard on load todo: don't work
                 return false
             }
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 Timber.d("qwer onQueryTextChange")
                 listAdapter?.filter(newText)
@@ -112,35 +112,18 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
                 }
                 return true
             }
-
         })
     }
-
-
-
-//    override fun onResume() {
-//        super.onResume()
-//        viewModel.getGame()
-//    }
-//
-//
-//    override fun onStop() {
-//        super.onStop()
-//        viewModel.saveGame()
-//    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         viewBinding = null
     }
 
-
     private fun render(currencyState: CurrencyStateModel) {
         if (!currencyState.errorMessage.isNullOrEmpty()) showSnackBar(currencyState.errorMessage)
         setOrderIcon(currencyState.order)
     }
-
 
     private fun updateCurrencies(currencies: List<CurrencyModel>) {
         listAdapter?.modifyList(viewModel.convertCurrencyModelsToCurrencyViews(currencies))
@@ -160,26 +143,27 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 //        val textView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
 //        textView.setTextColor(Color.BLUE)
         snackBar.show()
-
     }
 
     private fun setOrderIcon(order: String?) {
         Timber.d("qwer setOrderIcon order: %s", order)
         orderItem?.let {
-            when(order) {
+            when (order) {
                 null -> {
-                    it.icon = AppCompatResources.getDrawable(requireContext(),R.drawable.ic_sort_natural)
+                    it.icon =
+                        AppCompatResources.getDrawable(requireContext(), R.drawable.ic_sort_natural)
                 }
                 CurrencyOrder.ASCENDING.name -> {
-                    it.icon = AppCompatResources.getDrawable(requireContext(),R.drawable.ic_sort_asc)
+                    it.icon =
+                        AppCompatResources.getDrawable(requireContext(), R.drawable.ic_sort_asc)
                 }
                 CurrencyOrder.DESCENDING.name -> {
-                    it.icon = AppCompatResources.getDrawable(requireContext(),R.drawable.ic_sort_des)
+                    it.icon =
+                        AppCompatResources.getDrawable(requireContext(), R.drawable.ic_sort_des)
                 }
             }
         }
     }
-
 
     private fun setupListAdapter() {
         listAdapter = CurrenciesListAdapter(this)
@@ -191,7 +175,6 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
             )
         )
     }
-
 
     //--  OnCurrencyClickListener  --
     override fun onItemClicked(codigo: String?) {

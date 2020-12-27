@@ -7,15 +7,14 @@ import javax.inject.Inject
 
 class SerieStateDataMapper @Inject constructor() {
 
-    fun SerieStateEntity.fromEntityToDomain(series: List<SerieModel>) = SerieStateModel(
-        series = series,
-        isSeriesUpdated = isSeriesUpdated,
+    fun SerieStateEntity.fromEntityToDomain() = SerieStateModel(
+        codigo = codigo,
         updateTime = updateTime,
         errorMessage = errorMessage
     )
 
     fun SerieStateModel.fromDomainToEntity() = SerieStateEntity(
-        isSeriesUpdated = isSeriesUpdated,
+        codigo = codigo,
         updateTime = updateTime,
         errorMessage = errorMessage
     )

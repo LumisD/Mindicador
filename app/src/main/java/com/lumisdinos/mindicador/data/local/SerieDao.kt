@@ -10,19 +10,25 @@ interface SerieDao {
 
     //SerieState
 
-    @Query("SELECT * FROM serie_state")
-    fun getSerieState(): Flow<SerieStateEntity>
+    @Query("SELECT * FROM serie_state WHERE codigo = :currencyCode")
+    fun getSerieStateFlow(currencyCode: String): Flow<SerieStateEntity>
+
+    @Query("SELECT * FROM serie_state WHERE codigo = :currencyCode")
+    fun getSerieState(currencyCode: String): SerieStateEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSerieState(serieState: SerieStateEntity)
+
+    @Query("DELETE FROM serie_state WHERE codigo = :currencyCode")
+    fun deleteSerieState(currencyCode: String)
 
     @Query("DELETE FROM serie_state")
     fun deleteAllSerieStates()
 
     //Serie
 
-    @Query("SELECT * FROM serie WHERE currency_id = :currencyId")
-    fun getSeriesByCurrencyId(currencyId: Int): List<SerieEntity>
+    @Query("SELECT * FROM serie WHERE codigo = :currencyCode")
+    fun getSeriesByCurrencyCode(currencyCode: String): List<SerieEntity>
 
     @Query("SELECT * FROM serie WHERE id = :serieId LIMIT 1")
     fun getSerie(serieId: Int): SerieEntity?
@@ -36,8 +42,8 @@ interface SerieDao {
     @Query("DELETE FROM serie WHERE id = :serieId")
     fun deleteSerie(serieId: Int)
 
-    @Query("DELETE FROM serie WHERE currency_id = :currencyId")
-    fun deleteSeriesByCurrencyId(currencyId: Int)
+    @Query("DELETE FROM serie WHERE codigo = :currencyCode")
+    fun deleteSeriesByCurrencyCode(currencyCode: String)
 
     @Query("DELETE FROM serie")
     fun deleteAllSeries()

@@ -2,7 +2,7 @@ package com.lumisdinos.mindicador.domain.model
 
 data class SerieModel(
     val id: Int?,
-    val currencyId: Int?,
+    val currencyCode: String?,
     val fecha: String?,
     val valor: Double?
 )

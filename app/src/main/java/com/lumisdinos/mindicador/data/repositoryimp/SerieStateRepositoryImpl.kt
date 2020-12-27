@@ -15,19 +15,26 @@ class SerieStateRepositoryImpl @Inject constructor(
     private val serieStateDataMapper: SerieStateDataMapper
 ) : SerieStateRepository {
 
-    override fun getSerieState(currencyId: Int): Flow<SerieStateModel> {
-        return serieDao.getSerieState().map {
+    override fun getSerieStateFlow(currencyCode: String): Flow<SerieStateModel> {
+        return serieDao.getSerieStateFlow(currencyCode).map {
             if (it == null) {
                 SerieStateModel()
             } else {
-                val currencies = serieDao.getSeriesByCurrencyId(currencyId).map { with(serieDataMapper) {it.fromEntityToDomain()} }
-                with(serieStateDataMapper) { it.fromEntityToDomain(currencies) }
+                with(serieStateDataMapper) { it.fromEntityToDomain() }
             }
         }
     }
 
+    override fun getSerieState(currencyCode: String): SerieStateModel? {
+        return serieDao.getSerieState(currencyCode)?.let { with(serieStateDataMapper) {it.fromEntityToDomain()} }
+    }
+
     override fun insertSerieState(serieState: SerieStateModel)  =
         serieDao.insertSerieState(with(serieStateDataMapper) { serieState.fromDomainToEntity() })
+
+    override fun deleteSerieState(currencyCode: String) {
+        serieDao.deleteSerieState(currencyCode)
+    }
 
     override fun deleteAllSerieStates() = serieDao.deleteAllSerieStates()
 

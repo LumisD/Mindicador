@@ -11,9 +11,9 @@ import retrofit2.http.Path
 interface CurrencyRestApi {
 
     @GET("/api")
-    suspend fun getAllCurrencies(): Response<ResponseBody>//Response<Map<String, Any>>
+    suspend fun getAllCurrencies(): Response<ResponseBody>
 
-    @GET("/api/{currencyType}")
-    suspend fun getCurrencyForMonth(@Path("currencyType") currencyType: String): List<SerieEntry>//Response<List<SerieEntry>>
+    @GET("/api/{currencyCode}")
+    suspend fun getCurrencyForMonth(@Path("currencyCode") currencyCode: String): Response<ResponseBody>
 
 }

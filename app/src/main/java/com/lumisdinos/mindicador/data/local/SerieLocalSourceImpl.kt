@@ -7,12 +7,13 @@ class SerieLocalSourceImpl @Inject constructor(
     private val serieDao: SerieDao
 ) : SerieLocalSource {
 
-    override fun getSeriesByCurrencyId(currencyId: Int): List<SerieEntity> {
-        return serieDao.getSeriesByCurrencyId(currencyId)
+    override fun getSeriesByCurrencyCode(currencyCode: String): List<SerieEntity> {
+        return serieDao.getSeriesByCurrencyCode(currencyCode)
     }
 
-    override fun getSerie(serieId: Int): SerieEntity? {
-        return serieDao.getSerie(serieId)
+    override fun replaceSeriesByCurrencyCode(currencyCode: String, series: List<SerieEntity>) {
+        serieDao.deleteSeriesByCurrencyCode(currencyCode)
+        insertAllSeries(series)
     }
 
     override fun insertAllSeries(series: List<SerieEntity>) {
@@ -23,12 +24,8 @@ class SerieLocalSourceImpl @Inject constructor(
         serieDao.insertSerie(serie)
     }
 
-    override fun deleteSerie(serieId: Int) {
-        serieDao.deleteSerie(serieId)
-    }
-
-    override fun deleteSeriesByCurrencyId(currencyId: Int) {
-        serieDao.deleteSeriesByCurrencyId(currencyId)
+    override fun deleteSeriesByCurrencyCode(currencyCode: String) {
+        serieDao.deleteSeriesByCurrencyCode(currencyCode)
     }
 
     override fun deleteAllSeries() {

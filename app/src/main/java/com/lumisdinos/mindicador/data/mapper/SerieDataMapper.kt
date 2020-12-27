@@ -7,30 +7,30 @@ import javax.inject.Inject
 
 class SerieDataMapper @Inject constructor() {
 
-    fun SerieEntry.fromDataToDomain() = SerieModel(
+    fun SerieEntry.fromDataToDomain(currencyCode: String) = SerieModel(
         //todo: pass id and currency id?
         id = null,
-        currencyId = null,
+        currencyCode = currencyCode,
         fecha = fecha,
         valor = valor
     )
 
-    fun SerieEntry.fromDataToEntity() = SerieEntity(
-        //todo: pass id and currency id?
-        fecha = fecha,
-        valor = valor
-    )
+//    fun SerieEntry.fromDataToEntity() = SerieEntity(
+//        //todo: pass id and currency id?
+//        fecha = fecha,
+//        valor = valor
+//    )
 
     fun SerieEntity.fromEntityToDomain() = SerieModel(
         id = id,
-        currencyId = currencyId,
+        currencyCode = currencyCode,
         fecha = fecha,
         valor = valor
     )
 
     fun SerieModel.fromDomainToEntity() = SerieEntity(
         id = id,
-        currencyId = currencyId,
+        currencyCode = currencyCode,
         fecha = fecha,
         valor = valor
     )

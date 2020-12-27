@@ -1,12 +1,18 @@
 package com.lumisdinos.mindicador.presentation
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.lumisdinos.mindicador.domain.model.CurrencyModel
+import com.lumisdinos.mindicador.domain.model.CurrencyStateModel
 import com.lumisdinos.mindicador.domain.model.SerieModel
 import com.lumisdinos.mindicador.domain.model.SerieStateModel
 import com.lumisdinos.mindicador.domain.repos.SerieLogicRepository
+import com.lumisdinos.mindicador.domain.repos.SerieRepository
+import com.lumisdinos.mindicador.domain.repos.SerieStateRepository
 import com.lumisdinos.mindicador.ui.mapper.SerieViewMapper
+import com.lumisdinos.mindicador.ui.model.CurrencyView
 import com.lumisdinos.mindicador.ui.model.SerieView
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.catch
@@ -15,27 +21,44 @@ import javax.inject.Inject
 
 class DetailViewModel @Inject constructor(
     private val serieLogicRepo: SerieLogicRepository,
+    private val serieRepo: SerieRepository,
+    private val serieStateRepo: SerieStateRepository,
     private val serieViewMapper: SerieViewMapper
 ) : ViewModel() {
 
-    @ExperimentalCoroutinesApi
-    val serieState: LiveData<SerieStateModel> = serieLogicRepo
-        .getSerieState(0)//todo: pass meaningfull currencyId
-        .catch {
-            Timber.d("qwer getSerieState catch: %s", it.message)
-        }
-        .asLiveData()
+    var serieState: LiveData<SerieStateModel> = MutableLiveData<SerieStateModel>()
+    private val _series: MutableLiveData<List<SerieModel>> = MutableLiveData<List<SerieModel>>()
+    val series: LiveData<List<SerieModel>> = _series
+    private var currCode = ""
 
-    fun downloadSeriesByCurrencyId(currencyCode: String) {
-        //serieLogicRepo.downloadSeriesByCurrencyId(currencyId)
+    fun downloadSeriesByCurrencyId(currencyCode: String = currCode) {
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                currCode = currencyCode
+                setSerieState(currencyCode)
+                _series.postValue(serieRepo.getSerieForMonth(currencyCode,true))
+            }
+        }
+    }
+
+    private fun setSerieState(currencyCode: String) {
+        Timber.d("qwer setSerieState")
+        @ExperimentalCoroutinesApi
+        serieState = serieStateRepo.getSerieStateFlow(currencyCode)
+            .catch { Timber.d("qwer getSerieState catch: %s", it.message) }
+            .asLiveData()
     }
 
     fun share() {
         serieLogicRepo.share()
     }
 
-    fun seriesAreRendered() {
-        serieLogicRepo.seriesAreRendered()
+    fun messageIsShown() {
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                serieLogicRepo.messageIsShown(currCode)
+            }
+        }
     }
 
     fun convertSerieyModelsToSerieViews(serieModels: List<SerieModel>): List<SerieView> {

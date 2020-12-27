@@ -1,11 +1,11 @@
 package com.lumisdinos.mindicador.data.remote
 
+import com.lumisdinos.mindicador.common.Resource
 import com.lumisdinos.mindicador.data.remote.model.SerieEntry
-import retrofit2.Response
 
 
 interface SerieRemoteSource {
 
-    suspend fun getSeriesByCurrencyId(currencyId: Int): List<SerieEntry>?//Response<List<SerieEntry>>?
+    suspend fun getSerieForMonth(currencyCode: String): Resource<List<SerieEntry>>
 
 }
