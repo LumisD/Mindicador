@@ -29,7 +29,7 @@ class CurrencyDataRepository @Inject constructor(
                 Timber.d("qwer getAllCurrencies isRemoteError: %s", remoteResponse.message)
                 list.addAll(currencyLocal.getAllCurrencies()
                     .map { with(currencyMapper) { it.fromEntityToDomain() } })
-                updateCurrencyState(remoteResponse.message)
+                setMessageInState(remoteResponse.message)
             } else {
 
                 remoteResponse.data?.let {
@@ -44,16 +44,6 @@ class CurrencyDataRepository @Inject constructor(
         } else {
             return currencyLocal.getAllCurrencies().map { with(currencyMapper) {it.fromEntityToDomain()} }
         }
-    }
-
-    private fun updateCurrencyState( message: String? = null) {
-        Timber.d("qwer setStateCurrencies")
-        var currencyState = currencyStateRepo.getCurrencyState()
-        currencyState = currencyState.copy(
-            errorMessage = message//,
-            //isErrorMessageNotShown = !message.isNullOrEmpty()
-        )
-        currencyStateRepo.insertCurrencyState(currencyState)
     }
 
     override fun getCurrency(codigo: String): CurrencyModel? {
@@ -83,5 +73,13 @@ class CurrencyDataRepository @Inject constructor(
         return currencyLocal.getCurrencyCount()
     }
 
+    private fun setMessageInState(message: String? = null) {
+        Timber.d("qwer setMessageInState")
+        var currencyState = currencyStateRepo.getCurrencyState()
+        currencyState = currencyState.copy(
+            errorMessage = message
+        )
+        currencyStateRepo.insertCurrencyState(currencyState)
+    }
 
 }

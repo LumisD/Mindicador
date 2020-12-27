@@ -38,7 +38,10 @@ class HomeViewModel @Inject constructor(
         Timber.d("qwer downloadCurrencies")
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
-                _currencies.postValue(currencyRepo.getAllCurrencies(true))
+                currencyLogicRepo.setLoading(true)
+                val list = currencyRepo.getAllCurrencies(true)
+                _currencies.postValue(list)
+                currencyLogicRepo.setLoading(false)
             }
         }
     }

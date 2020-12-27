@@ -11,13 +11,15 @@ class CurrencyStateDataMapper @Inject constructor() {
         CurrencyStateModel(
             updateTime = updateTime,
             errorMessage = errorMessage,
-            order = order
+            order = order,
+            loading = loading
         )
 
     fun CurrencyStateModel.fromDomainToEntity() = CurrencyStateEntity(
         updateTime = updateTime,
         errorMessage = errorMessage,
-        order = order
+        order = order,
+        loading = loading
     )
 
 }

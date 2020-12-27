@@ -43,8 +43,11 @@ class DetailViewModel @Inject constructor(
     fun downloadSeriesByCurrencyCode(currencyCode: String = currCode) {
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
+                serieLogicRepo.setLoading(true, currencyCode)
                 setNewCurrencyForState(currencyCode)
-                _series.postValue(serieRepo.getSerieForMonth(currencyCode, true))
+                val list = serieRepo.getSerieForMonth(currencyCode, true)
+                _series.postValue(list)
+                serieLogicRepo.setLoading(false, currencyCode)
             }
         }
     }

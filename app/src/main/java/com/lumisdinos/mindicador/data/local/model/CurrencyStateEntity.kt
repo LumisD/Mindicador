@@ -10,5 +10,6 @@ data class CurrencyStateEntity @JvmOverloads constructor(
     @PrimaryKey @ColumnInfo(name = ID) val id: Int? = 0,
     @ColumnInfo(name = "update_time") val updateTime: Long? = 0L,
     @ColumnInfo(name = "error_message") val errorMessage: String? = null,
-    @ColumnInfo(name = "order") val order: String? = null
+    @ColumnInfo(name = "order") val order: String? = null,
+    @ColumnInfo(name = "loading") val loading: Boolean = false
 )

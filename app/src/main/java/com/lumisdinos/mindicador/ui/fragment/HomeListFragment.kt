@@ -1,17 +1,14 @@
 package com.lumisdinos.mindicador.ui.fragment
 
-import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat.getColor
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.google.android.material.snackbar.Snackbar
 import com.lumisdinos.mindicador.R
 import com.lumisdinos.mindicador.common.CurrencyOrder
 import com.lumisdinos.mindicador.common.extension.hideKeyboard
@@ -127,8 +124,9 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 
     private fun render(currencyState: CurrencyStateModel?) {
         currencyState?.let {
-            if (!it.errorMessage.isNullOrEmpty()) showSnackBar(it.errorMessage)
+            if (!it.errorMessage.isNullOrEmpty()) showErrorInSnackBar(it.errorMessage)
             setOrderIcon(it.order)
+            setLoadingBarVisibility(it.loading)
         }
     }
 
@@ -136,9 +134,24 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
         listAdapter?.modifyList(viewModel.convertCurrencyModelsToCurrencyViews(currencies))
     }
 
-    private fun showSnackBar(message: String) {
+    private fun showErrorInSnackBar(message: String) {
         viewModel.messageIsShown()
         showSnackbar(viewBinding?.root!!, message, requireContext(), viewModel::downloadCurrencies)
+    }
+
+    private fun setLoadingBarVisibility(isLoading: Boolean) {
+        viewBinding?.let {
+            Timber.d("qwer setLoadingBarVisibility")
+            if (it.pbLoading.isVisible == isLoading) return
+            val visibility: Int
+            Timber.d("qwer setLoadingBarVisibility CHANGING VISIBILITY")
+            if (isLoading) {
+                visibility = View.VISIBLE
+            } else {
+                visibility = View.GONE
+            }
+            it.pbLoading.visibility = visibility
+        }
     }
 
     private fun setOrderIcon(order: String?) {

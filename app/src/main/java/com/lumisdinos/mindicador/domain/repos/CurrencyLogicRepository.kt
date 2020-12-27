@@ -8,4 +8,6 @@ interface CurrencyLogicRepository {
 
     suspend fun messageIsShown()
 
+    suspend fun setLoading(isLoading: Boolean)
+
 }

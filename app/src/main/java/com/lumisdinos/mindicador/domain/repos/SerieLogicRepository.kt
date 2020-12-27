@@ -6,4 +6,6 @@ interface SerieLogicRepository {
 
     suspend fun messageIsShown(currencyCode: String, type: String)
 
+    suspend fun setLoading(isLoading: Boolean, currencyCode: String)
+
 }

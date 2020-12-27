@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -90,6 +91,7 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
         serieState?.let {
             if (!it.errorMessage.isNullOrEmpty()) showErrorInSnackBar(it.errorMessage)
             if (!it.sharedMessage.isNullOrEmpty()) share(it.sharedMessage)
+            setLoadingBarVisibility(it.loading)
         }
     }
 
@@ -100,6 +102,21 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
     private fun showErrorInSnackBar(message: String) {
         viewModel.messageIsShown(MessageType.ERROR.name)
         showSnackbar(viewBinding?.root!!, message, requireContext(), viewModel::downloadSeriesByCurrencyCode)
+    }
+
+    private fun setLoadingBarVisibility(isLoading: Boolean) {
+        viewBinding?.let {
+            Timber.d("qwer setLoadingBarVisibility")
+            if (it.pbLoading.isVisible == isLoading) return
+            val visibility: Int
+            Timber.d("qwer setLoadingBarVisibility CHANGING VISIBILITY")
+            if (isLoading) {
+                visibility = View.VISIBLE
+            } else {
+                visibility = View.GONE
+            }
+            it.pbLoading.visibility = visibility
+        }
     }
 
     private fun share(message: String) {

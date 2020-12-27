@@ -30,6 +30,16 @@ class SerieLogicRepositoryImpl @Inject constructor(
         serieStateRepo.insertSerieState(serieState)
     }
 
+    override suspend fun setLoading(isLoading: Boolean, currencyCode: String) {
+        Timber.d("qwer setLoading")
+        var serieState = getState(currencyCode)
+        serieState = serieState.copy(
+            loading = isLoading
+        )
+        serieStateRepo.insertSerieState(serieState)
+    }
+
+
     private fun getState(currencyCode: String): SerieStateModel {
         val ser = serieStateRepo.getSerieState(currencyCode)
         Timber.d("qwer getState serieState: %s", ser)

@@ -1,5 +1,6 @@
 package com.lumisdinos.mindicador.ui.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.widget.TextView
@@ -9,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.lumisdinos.mindicador.R
 import com.lumisdinos.mindicador.data.Constants.TEN_SEC
 
+@SuppressLint("WrongConstant")
 fun showSnackbar(view: View, message: String, context: Context, action: () -> Unit) {
     val snackBar = Snackbar.make(
         view, message,

@@ -42,6 +42,15 @@ class CurrencyLogicRepositoryImpl @Inject constructor(
         currencyStateRepo.insertCurrencyState(currencyState)
     }
 
+    override suspend fun setLoading(isLoading: Boolean) {
+        Timber.d("qwer setLoading")
+        var currencyState = currencyStateRepo.getCurrencyState()
+        currencyState = currencyState.copy(
+            loading = isLoading
+        )
+        currencyStateRepo.insertCurrencyState(currencyState)
+    }
+
     private fun getNextOrder(currencyState: CurrencyStateModel): String? {
         return when (currencyState.order) {
             null -> {
