@@ -33,12 +33,12 @@ class SerieStateRepositoryImpl @Inject constructor(
         return serieDao.getSerieStateFlow(currencyCode).map {
             if (it == null) {
 
-                CoroutineScope(Dispatchers.Main).launch {
-                    withContext(Dispatchers.IO) {
-                        val state = serieDao.getSerieState(currencyCode)
-                        Timber.d("qwer getSerieStateFlow   getSerieState: %s", state)
-                    }
-                }
+//                CoroutineScope(Dispatchers.Main).launch {
+//                    withContext(Dispatchers.IO) {
+//                        val state = serieDao.getSerieState(currencyCode)
+//                        Timber.d("qwer getSerieStateFlow   getSerieState: %s", state)
+//                    }
+//                }
 
                 Timber.d("qwer getSerieStateFlow if (it == null) -> new SerieStateModel")
                 SerieStateModel(codigo = currencyCode)

@@ -27,7 +27,7 @@ class DetailViewModel @Inject constructor(
     private var currCode = ""
 
     @ExperimentalCoroutinesApi
-    val serieState: LiveData<SerieStateModel> = serieStateRepo
+    var serieState: LiveData<SerieStateModel> = serieStateRepo
         .getSerieStateFlow(currCode)
         .catch {
             Timber.d("qwer getSerieStateFlow catch: %s", it.message)
@@ -39,23 +39,24 @@ class DetailViewModel @Inject constructor(
     val series: LiveData<List<SerieModel>> = _series
 
 
+    @ExperimentalCoroutinesApi
     fun downloadSeriesByCurrencyId(currencyCode: String = currCode) {
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
                 currCode = currencyCode
-                //setSerieState(currencyCode)
+                setSerieState(currencyCode)
                 _series.postValue(serieRepo.getSerieForMonth(currencyCode,true))
             }
         }
     }
 
-//    private fun setSerieState(currencyCode: String) {
-//        Timber.d("qwer setSerieState")
-//        @ExperimentalCoroutinesApi
-//        serieState = serieStateRepo.getSerieStateFlow(currencyCode)
-//            .catch { Timber.d("qwer getSerieState catch: %s", it.message) }
-//            .asLiveData()
-//    }
+    @ExperimentalCoroutinesApi
+    private fun setSerieState(currencyCode: String) {
+        Timber.d("qwer setSerieState")
+        serieState = serieStateRepo.getSerieStateFlow(currencyCode)
+            .catch { Timber.d("qwer getSerieState catch: %s", it.message) }
+            .asLiveData()
+    }
 
     fun share() {
         CoroutineScope(Dispatchers.Main).launch {
