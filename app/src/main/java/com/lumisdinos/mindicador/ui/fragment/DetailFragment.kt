@@ -1,5 +1,6 @@
 package com.lumisdinos.mindicador.ui.fragment
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.lumisdinos.mindicador.R
+import com.lumisdinos.mindicador.common.MessageType
 import com.lumisdinos.mindicador.common.util.isClickedShort
 import com.lumisdinos.mindicador.databinding.FragmentDetailBinding
 import com.lumisdinos.mindicador.domain.model.SerieModel
@@ -79,17 +81,18 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
     }
 
     private fun render(serieState: SerieStateModel) {
-        if (!serieState.errorMessage.isNullOrEmpty()) showSnackBar(serieState.errorMessage)
+        Timber.d("qwer render serieState: %s", serieState)
+        if (!serieState.errorMessage.isNullOrEmpty()) showErrorInSnackBar(serieState.errorMessage)
+        if (!serieState.sharedMessage.isNullOrEmpty()) share(serieState.sharedMessage)
     }
 
     private fun updateSeries(series: List<SerieModel>) {
-        viewModel.messageIsShown()
         listAdapter?.submitList(viewModel.convertSerieyModelsToSerieViews(series))
     }
 
-    private fun showSnackBar(message: String) {
-        Timber.d("qwer showSnackBar message: %s", message)
-        viewModel.messageIsShown()
+    private fun showErrorInSnackBar(message: String) {
+        Timber.d("qwer showErrorInSnackBar message: %s", message)
+        viewModel.messageIsShown(MessageType.ERROR.name)
         val snackBar = Snackbar.make(
             viewBinding?.root!!, message,
             Snackbar.LENGTH_LONG
@@ -99,6 +102,18 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
         val snackBarView = snackBar.view
         snackBarView.setBackgroundColor(Color.CYAN)
         snackBar.show()
+    }
+
+    private fun share(message: String) {
+        viewModel.messageIsShown(MessageType.SHARED.name)
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, message)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     private fun setupListAdapter() {

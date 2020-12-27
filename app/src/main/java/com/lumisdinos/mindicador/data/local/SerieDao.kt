@@ -16,6 +16,9 @@ interface SerieDao {
     @Query("SELECT * FROM serie_state WHERE codigo = :currencyCode")
     fun getSerieState(currencyCode: String): SerieStateEntity?
 
+    @Query("SELECT * FROM serie_state")
+    fun getAllSerieState(): List<SerieStateEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSerieState(serieState: SerieStateEntity)
 

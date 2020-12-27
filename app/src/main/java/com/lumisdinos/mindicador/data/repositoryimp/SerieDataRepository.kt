@@ -22,7 +22,7 @@ class SerieDataRepository @Inject constructor(
         currencyCode: String,
         forceUpdate: Boolean
     ): List<SerieModel> {
-        Timber.d("qwer getSerieForMonth")
+        //Timber.d("qwer getSerieForMonth")
         if (forceUpdate) {
             val remoteResponse = serieRemote.getSerieForMonth(currencyCode)
             val isRemoteError = remoteResponse.state == ResourceState.ERROR
@@ -34,9 +34,9 @@ class SerieDataRepository @Inject constructor(
                 updateSerieState(currencyCode, remoteResponse.message)
             } else {
                 remoteResponse.data?.let {
-                    Timber.d("qwer getAllCurrencies remoteResponse.data: %s", it)
+                    //Timber.d("qwer getAllCurrencies remoteResponse.data: %s", it)
                     list.addAll(it.map { with(serieMapper) { it.fromDataToDomain(currencyCode) } })
-                    Timber.d("qwer getAllCurrencies list: %s", it)
+                    //Timber.d("qwer getAllCurrencies list: %s", it)
                     replaceSeriesByCurrencyCode(currencyCode, list)
                 }
             }
