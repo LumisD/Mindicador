@@ -9,12 +9,4 @@ interface CurrencyRepository {
     fun getCurrency(codigo: String): CurrencyModel?
 
     fun insertAllCurrencies(currencies: List<CurrencyModel>)
-
-    fun insertCurrency(currency: CurrencyModel)
-
-    fun deleteCurrency(codigo: String)
-
-    fun deleteAllCurrencies()
-
-    fun getCurrencyCount(): Int
 }

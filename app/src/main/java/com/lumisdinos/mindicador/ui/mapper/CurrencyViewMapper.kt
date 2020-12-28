@@ -7,7 +7,6 @@ import javax.inject.Inject
 class CurrencyViewMapper @Inject constructor() {
 
     fun CurrencyModel.fromDomainToView() = CurrencyView(
-        //id = id,
         codigo = codigo,
         nombre = nombre,
         unidadMedida = unidadMedida,

@@ -8,11 +8,9 @@ import com.lumisdinos.mindicador.data.Constants.CURRENCY_FECHA
 import com.lumisdinos.mindicador.data.Constants.CURRENCY_NOMBRE
 import com.lumisdinos.mindicador.data.Constants.CURRENCY_UNIDAD_MEDIDA
 import com.lumisdinos.mindicador.data.Constants.CURRENCY_VALOR
-import com.lumisdinos.mindicador.data.Constants.ID
 
 @Entity(tableName = "currency")
 data class CurrencyEntity @JvmOverloads constructor(
-    //@PrimaryKey @ColumnInfo(name = ID) val id: Int? = 0,
     @PrimaryKey @ColumnInfo(name = CURRENCY_CODIGO) val codigo: String = "",
     @ColumnInfo(name = CURRENCY_NOMBRE) val nombre: String? = "",
     @ColumnInfo(name = CURRENCY_UNIDAD_MEDIDA) val unidadMedida: String? = "",

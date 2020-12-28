@@ -28,6 +28,4 @@ class CurrencyStateRepositoryImpl @Inject constructor(
     override fun insertCurrencyState(currencyState: CurrencyStateModel) =
         currencyDao.insertCurrencyState(with(currencyStateDataMapper) { currencyState.fromDomainToEntity() })
 
-    override fun deleteAllCurrencyStates() = currencyDao.deleteAllCurrencyStates()
-
 }

@@ -11,8 +11,4 @@ interface SerieStateRepository {
     fun getSerieState(currencyCode: String): SerieStateModel?
 
     fun insertSerieState(serieState: SerieStateModel)
-
-    fun deleteSerieState(currencyCode: String)
-
-    fun deleteAllSerieStates()
 }

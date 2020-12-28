@@ -49,22 +49,6 @@ class CurrencyDataRepository @Inject constructor(
         currencyLocal.insertAllCurrencies(list)
     }
 
-    override fun insertCurrency(currency: CurrencyModel) {
-        currencyLocal.insertCurrency(currency.let { with(currencyMapper) { it.fromDomainToEntity() } })
-    }
-
-    override fun deleteCurrency(codigo: String) {
-        currencyLocal.deleteCurrency(codigo)
-    }
-
-    override fun deleteAllCurrencies() {
-        currencyLocal.deleteAllCurrencies()
-    }
-
-    override fun getCurrencyCount(): Int {
-        return currencyLocal.getCurrencyCount()
-    }
-
     private fun setMessageInState(message: String? = null) {
         var currencyState = currencyStateRepo.getCurrencyState()
         currencyState = currencyState.copy(

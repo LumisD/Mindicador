@@ -19,24 +19,4 @@ class CurrencyLocalSourceImpl @Inject constructor(
         currencyDao.insertAllCurrencies(currencies)
     }
 
-    override fun insertCurrency(currency: CurrencyEntity) {
-        currencyDao.insertCurrency(currency)
-    }
-
-    override fun deleteCurrency(codigo: String) {
-        currencyDao.deleteCurrency(codigo)
-    }
-
-    override fun deleteAllCurrencies() {
-        currencyDao.deleteAllCurrencies()
-    }
-
-//    override fun getMaxIdCurrency(): Int {
-//        return currencyDao.getMaxIdCurrency()
-//    }
-
-    override fun getCurrencyCount(): Int {
-        return currencyDao.getCurrencyCount()
-    }
-
 }

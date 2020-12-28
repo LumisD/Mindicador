@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.lumisdinos.mindicador.data.Constants.CURRENCY_CODIGO
 import com.lumisdinos.mindicador.data.Constants.CURRENCY_FECHA
-import com.lumisdinos.mindicador.data.Constants.CURRENCY_ID
 import com.lumisdinos.mindicador.data.Constants.CURRENCY_VALOR
 import com.lumisdinos.mindicador.data.Constants.ID
 

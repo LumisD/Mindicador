@@ -10,6 +10,4 @@ interface CurrencyStateRepository {
     fun getCurrencyState(): CurrencyStateModel
 
     fun insertCurrencyState(currencyState: CurrencyStateModel)
-
-    fun deleteAllCurrencyStates()
 }

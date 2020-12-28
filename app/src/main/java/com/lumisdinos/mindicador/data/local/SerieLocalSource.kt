@@ -1,7 +1,6 @@
 package com.lumisdinos.mindicador.data.local
 
 import com.lumisdinos.mindicador.data.local.model.SerieEntity
-import com.lumisdinos.mindicador.domain.model.SerieModel
 
 interface SerieLocalSource {
 
@@ -10,15 +9,4 @@ interface SerieLocalSource {
     fun replaceSeriesByCurrencyCode(currencyCode: String, series: List<SerieEntity>)
 
     fun insertAllSeries(series: List<SerieEntity>)
-
-    fun insertSerie(serie: SerieEntity)
-
-    fun deleteSeriesByCurrencyCode(currencyCode: String)
-
-    fun deleteAllSeries()
-
-    fun getMaxIdSerie(): Int
-
-    fun getSerieCount(): Int
-
 }

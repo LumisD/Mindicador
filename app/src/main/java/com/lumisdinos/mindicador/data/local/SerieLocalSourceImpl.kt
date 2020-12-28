@@ -19,25 +19,4 @@ class SerieLocalSourceImpl @Inject constructor(
     override fun insertAllSeries(series: List<SerieEntity>) {
         serieDao.insertAllSeries(series)
     }
-
-    override fun insertSerie(serie: SerieEntity) {
-        serieDao.insertSerie(serie)
-    }
-
-    override fun deleteSeriesByCurrencyCode(currencyCode: String) {
-        serieDao.deleteSeriesByCurrencyCode(currencyCode)
-    }
-
-    override fun deleteAllSeries() {
-        serieDao.deleteAllSeries()
-    }
-
-    override fun getMaxIdSerie(): Int {
-        return serieDao.getMaxIdSerie()
-    }
-
-    override fun getSerieCount(): Int{
-        return serieDao.getSerieCount()
-    }
-
 }

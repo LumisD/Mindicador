@@ -8,8 +8,6 @@ import javax.inject.Inject
 class CurrencyDataMapper @Inject constructor() {
 
     fun CurrencyEntry.fromDataToDomain() = CurrencyModel(
-        //todo: pass id?
-        //id = null,
         codigo = codigo,
         nombre = nombre,
         unidadMedida = unidad_medida,
@@ -18,8 +16,6 @@ class CurrencyDataMapper @Inject constructor() {
     )
 
     fun CurrencyEntry.fromDataToEntity() = CurrencyEntity(
-        //todo: pass id?
-        //id = null,
         codigo = codigo,
         nombre = nombre,
         unidadMedida = unidad_medida,
@@ -28,7 +24,6 @@ class CurrencyDataMapper @Inject constructor() {
     )
 
     fun CurrencyEntity.fromEntityToDomain() = CurrencyModel(
-        //id = id,
         codigo = codigo,
         nombre = nombre,
         unidadMedida = unidadMedida,
@@ -37,7 +32,6 @@ class CurrencyDataMapper @Inject constructor() {
     )
 
     fun CurrencyModel.fromDomainToEntity() = CurrencyEntity(
-        //id = id,
         codigo = codigo,
         nombre = nombre,
         unidadMedida = unidadMedida,

@@ -9,12 +9,4 @@ interface SerieRepository {
     suspend fun replaceSeriesByCurrencyCode(currencyCode: String, series: List<SerieModel>)
 
     suspend fun insertAllSeries(series: List<SerieModel>)
-
-    suspend fun insertSerie(serie: SerieModel)
-
-    suspend fun deleteSeriesByCurrencyCode(currencyCode: String)
-
-    suspend fun deleteAllSeries()
-
-    suspend fun getSerieCount(): Int
 }

@@ -6,7 +6,6 @@ import com.lumisdinos.mindicador.data.Constants.CURRENCY_FECHA
 import com.lumisdinos.mindicador.data.Constants.CURRENCY_NOMBRE
 import com.lumisdinos.mindicador.data.Constants.CURRENCY_UNIDAD_MEDIDA
 import com.lumisdinos.mindicador.data.Constants.CURRENCY_VALOR
-import com.lumisdinos.mindicador.data.Constants.ID
 
 data class CurrencyEntry(
     @SerializedName(CURRENCY_CODIGO) val codigo: String,

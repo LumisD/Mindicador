@@ -64,20 +64,4 @@ class SerieDataRepository @Inject constructor(
         serieLocal.insertAllSeries(series.map { with(serieMapper) { it.fromDomainToEntity() } })
     }
 
-    override suspend fun insertSerie(serie: SerieModel) {
-        serieLocal.insertSerie(serie.let { with(serieMapper) { it.fromDomainToEntity() } })
-    }
-
-    override suspend fun deleteSeriesByCurrencyCode(currencyCode: String) {
-        serieLocal.deleteSeriesByCurrencyCode(currencyCode)
-    }
-
-    override suspend fun deleteAllSeries() {
-        serieLocal.deleteAllSeries()
-    }
-
-    override suspend fun getSerieCount(): Int {
-        return serieLocal.getSerieCount()
-    }
-
 }

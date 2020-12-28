@@ -28,11 +28,4 @@ class SerieStateRepositoryImpl @Inject constructor(
 
     override fun insertSerieState(serieState: SerieStateModel) =
         serieDao.insertSerieState(with(serieStateDataMapper) { serieState.fromDomainToEntity() })
-
-    override fun deleteSerieState(currencyCode: String) {
-        serieDao.deleteSerieState(currencyCode)
-    }
-
-    override fun deleteAllSerieStates() = serieDao.deleteAllSerieStates()
-
 }

@@ -6,6 +6,6 @@ import com.lumisdinos.mindicador.data.remote.model.CurrencyEntry
 
 interface CurrencyRemoteSource {
 
-    suspend fun getAllCurrencies(): Resource<List<CurrencyEntry>>//List<CurrencyEntry>?
+    suspend fun getAllCurrencies(): Resource<List<CurrencyEntry>>
 
 }

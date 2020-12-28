@@ -1,7 +1,6 @@
 package com.lumisdinos.mindicador.data.mapper
 
 import com.lumisdinos.mindicador.data.local.model.SerieStateEntity
-import com.lumisdinos.mindicador.domain.model.SerieModel
 import com.lumisdinos.mindicador.domain.model.SerieStateModel
 import javax.inject.Inject
 
