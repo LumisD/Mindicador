@@ -8,7 +8,6 @@ class SerieStateDataMapper @Inject constructor() {
 
     fun SerieStateEntity.fromEntityToDomain() = SerieStateModel(
         codigo = codigo,
-        updateTime = updateTime,
         errorMessage = errorMessage,
         sharedMessage = sharedMessage,
         loading = loading
@@ -16,7 +15,6 @@ class SerieStateDataMapper @Inject constructor() {
 
     fun SerieStateModel.fromDomainToEntity() = SerieStateEntity(
         codigo = codigo,
-        updateTime = updateTime,
         errorMessage = errorMessage,
         sharedMessage = sharedMessage,
         loading = loading
