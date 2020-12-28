@@ -8,7 +8,6 @@ import com.lumisdinos.mindicador.domain.model.SerieModel
 import com.lumisdinos.mindicador.domain.model.SerieStateModel
 import com.lumisdinos.mindicador.domain.repos.SerieRepository
 import com.lumisdinos.mindicador.domain.repos.SerieStateRepository
-import timber.log.Timber
 import javax.inject.Inject
 
 class SerieDataRepository @Inject constructor(
@@ -22,21 +21,17 @@ class SerieDataRepository @Inject constructor(
         currencyCode: String,
         forceUpdate: Boolean
     ): List<SerieModel> {
-        //Timber.d("qwer getSerieForMonth")
         if (forceUpdate) {
             val remoteResponse = serieRemote.getSerieForMonth(currencyCode)
             val isRemoteError = remoteResponse.state == ResourceState.ERROR
             val list: MutableList<SerieModel> = mutableListOf()
             if (isRemoteError) {
-                Timber.d("qwer getSerieForMonth isRemoteError: %s", remoteResponse.message)
                 list.addAll(serieLocal.getSeriesByCurrencyCode(currencyCode)
                     .map { with(serieMapper) { it.fromEntityToDomain() } })
                 updateSerieState(currencyCode, remoteResponse.message)
             } else {
                 remoteResponse.data?.let {
-                    //Timber.d("qwer getAllCurrencies remoteResponse.data: %s", it)
                     list.addAll(it.map { with(serieMapper) { it.fromDataToDomain(currencyCode) } })
-                    //Timber.d("qwer getAllCurrencies list: %s", it)
                     replaceSeriesByCurrencyCode(currencyCode, list)
                 }
             }
@@ -48,7 +43,6 @@ class SerieDataRepository @Inject constructor(
     }
 
     private fun updateSerieState(currencyCode: String, message: String? = null) {
-        Timber.d("qwer updateSerieState")
         var serieState = serieStateRepo.getSerieState(currencyCode)
         if (serieState == null) {
             serieState = SerieStateModel(codigo = currencyCode)

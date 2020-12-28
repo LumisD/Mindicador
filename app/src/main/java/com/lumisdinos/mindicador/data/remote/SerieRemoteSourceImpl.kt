@@ -7,7 +7,6 @@ import com.lumisdinos.mindicador.data.Constants
 import com.lumisdinos.mindicador.data.remote.model.SerieEntry
 import org.json.JSONArray
 import org.json.JSONObject
-import timber.log.Timber
 import javax.inject.Inject
 
 class SerieRemoteSourceImpl @Inject constructor(
@@ -15,7 +14,6 @@ class SerieRemoteSourceImpl @Inject constructor(
 ) : SerieRemoteSource {
 
     override suspend fun getSerieForMonth(currencyCode: String): Resource<List<SerieEntry>> {
-        Timber.d("qwer SerieRemoteSourceImpl getSerieForMonth")
         try {
             val response = restApi.getCurrencyForMonth(currencyCode)
             if (!response.isSuccessful) return Resource(

@@ -23,7 +23,6 @@ import com.lumisdinos.mindicador.ui.adapter.SeriesListAdapter
 import com.lumisdinos.mindicador.ui.util.showSnackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import timber.log.Timber
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -50,7 +49,6 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.d("qwer onViewCreated -> downloadCurrencies")
         viewModel.downloadSeriesByCurrencyCode(args.currencyCode)
     }
 
@@ -87,7 +85,6 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
     }
 
     private fun render(serieState: SerieStateModel?) {
-        Timber.d("qwer render serieState: %s", serieState)
         serieState?.let {
             if (!it.errorMessage.isNullOrEmpty()) showErrorInSnackBar(it.errorMessage)
             if (!it.sharedMessage.isNullOrEmpty()) share(it.sharedMessage)
@@ -106,10 +103,8 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
 
     private fun setLoadingBarVisibility(isLoading: Boolean) {
         viewBinding?.let {
-            Timber.d("qwer setLoadingBarVisibility")
             if (it.pbLoading.isVisible == isLoading) return
             val visibility: Int
-            Timber.d("qwer setLoadingBarVisibility CHANGING VISIBILITY")
             if (isLoading) {
                 visibility = View.VISIBLE
             } else {
@@ -144,7 +139,6 @@ class DetailFragment : DaggerFragment(), OnSerieClickListener {
 
     //--  OnSerieClickListener  --
     override fun onItemClicked(id: Int?) {
-        Timber.d("qwer onItemClicked")
     }
 
 }

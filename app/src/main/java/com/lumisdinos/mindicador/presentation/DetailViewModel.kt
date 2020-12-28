@@ -31,7 +31,7 @@ class DetailViewModel @Inject constructor(
     val serieState = currencyFlow.flatMapLatest {
         serieStateRepo.getSerieStateFlow(currCode)
     }.catch {
-        Timber.d("qwer getSerieStateFlow catch: %s", it.message)
+        Timber.d("getSerieStateFlow catch: %s", it.message)
     }
         .asLiveData(Dispatchers.IO);
 

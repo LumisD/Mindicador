@@ -13,7 +13,6 @@ import com.lumisdinos.mindicador.ui.mapper.CurrencyViewMapper
 import com.lumisdinos.mindicador.ui.model.CurrencyView
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.catch
-import timber.log.Timber
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -27,7 +26,6 @@ class HomeViewModel @Inject constructor(
     val currencyState: LiveData<CurrencyStateModel?> = currencyStateRepo
         .getCurrencyStateFlow()
         .catch {
-            Timber.d("qwer getCurrencyStateFlow catch: %s", it.message)
         }
         .asLiveData()
 
@@ -35,7 +33,6 @@ class HomeViewModel @Inject constructor(
     val currencies: LiveData<List<CurrencyModel>> = _currencies
 
     fun downloadCurrencies() {
-        Timber.d("qwer downloadCurrencies")
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
                 currencyLogicRepo.setLoading(true)
@@ -63,9 +60,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun convertCurrencyModelsToCurrencyViews(currencyModels: List<CurrencyModel>): List<CurrencyView> {
-        Timber.d("qwer convertCurrencyModelsToCurrencyViews currencyModels: %s", currencyModels)
         val list = currencyModels.map { with(currencyViewMapper) { it.fromDomainToView() } }
-        Timber.d("qwer convertCurrencyModelsToCurrencyViews list: %s", list)
         return list
     }
 

@@ -6,7 +6,7 @@ object Constants {
 
     const val SHORT_DELAY = 200L
     const val LONG_DELAY = 1000L
-    const val TEN_SEC = 10000
+    const val FIVE_SEC = 5000
 
     //Currency
     const val ID = "id"

@@ -8,34 +8,28 @@ import com.lumisdinos.mindicador.data.remote.CurrencyRemoteSource
 import com.lumisdinos.mindicador.domain.model.CurrencyModel
 import com.lumisdinos.mindicador.domain.repos.CurrencyRepository
 import com.lumisdinos.mindicador.domain.repos.CurrencyStateRepository
-import timber.log.Timber
 import javax.inject.Inject
 
 class CurrencyDataRepository @Inject constructor(
     private val currencyRemote: CurrencyRemoteSource,
     private val currencyLocal: CurrencyLocalSource,
-    private val currencyDao: CurrencyDao,
     private val currencyStateRepo: CurrencyStateRepository,
     private val currencyMapper: CurrencyDataMapper
 ) : CurrencyRepository {
 
     override suspend fun getAllCurrencies(forceUpdate: Boolean): List<CurrencyModel> {
-        Timber.d("qwer getAllCurrencies")
         if (forceUpdate) {
             val remoteResponse = currencyRemote.getAllCurrencies()
             val isRemoteError = remoteResponse.state == ResourceState.ERROR
             val list: MutableList<CurrencyModel> = mutableListOf()
             if (isRemoteError) {
-                Timber.d("qwer getAllCurrencies isRemoteError: %s", remoteResponse.message)
                 list.addAll(currencyLocal.getAllCurrencies()
                     .map { with(currencyMapper) { it.fromEntityToDomain() } })
                 setMessageInState(remoteResponse.message)
             } else {
 
                 remoteResponse.data?.let {
-                    Timber.d("qwer getAllCurrencies remoteResponse.data: %s", it)
                     list.addAll(it.map { with(currencyMapper) { it.fromDataToDomain() } })
-                    Timber.d("qwer getAllCurrencies list: %s", it)
                     insertAllCurrencies(list)
                 }
             }
@@ -52,8 +46,6 @@ class CurrencyDataRepository @Inject constructor(
 
     override fun insertAllCurrencies(currencies: List<CurrencyModel>) {
         val list = currencies.map { with(currencyMapper) { it.fromDomainToEntity() } }
-        //currencyLocal.insertAllCurrencies(currencies.map { with(currencyMapper) { it.fromDomainToEntity() } })
-        Timber.d("qwer insertAllCurrencies list: %s", list)
         currencyLocal.insertAllCurrencies(list)
     }
 
@@ -74,7 +66,6 @@ class CurrencyDataRepository @Inject constructor(
     }
 
     private fun setMessageInState(message: String? = null) {
-        Timber.d("qwer setMessageInState")
         var currencyState = currencyStateRepo.getCurrencyState()
         currencyState = currencyState.copy(
             errorMessage = message

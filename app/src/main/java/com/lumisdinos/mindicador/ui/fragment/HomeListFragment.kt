@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lumisdinos.mindicador.R
 import com.lumisdinos.mindicador.common.CurrencyOrder
-import com.lumisdinos.mindicador.common.extension.hideKeyboard
 import com.lumisdinos.mindicador.common.util.isClickedShort
 import com.lumisdinos.mindicador.common.util.isClickedSingle
 import com.lumisdinos.mindicador.databinding.FragmentListHomeBinding
@@ -23,7 +22,6 @@ import com.lumisdinos.mindicador.ui.adapter.OnCurrencyClickListener
 import com.lumisdinos.mindicador.ui.util.showSnackbar
 import dagger.android.support.DaggerFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import timber.log.Timber
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -50,22 +48,15 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.d("qwer onViewCreated -> downloadCurrencies")
         viewModel.downloadCurrencies()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupListAdapter()
-        Timber.d("qwer onActivityCreated -> viewModel.currencyState.observe")
         viewModel.currencyState.observe(viewLifecycleOwner, { render(it) })
         viewModel.currencies.observe(viewLifecycleOwner, { updateCurrencies(it) })
     }
-
-//    override fun onConfigurationChanged(newConfig: Configuration) {
-//        super.onConfigurationChanged(newConfig)
-//        Timber.d("qwer onConfigurationChanged")
-//    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_home_list, menu)
@@ -75,12 +66,6 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            R.id.action_filter -> {
-//                Timber.d("qwer action_switch_order clicked")
-//                if (isClickedSingle()) return true
-//                showKeyboard()
-//                return true
-//            }
             R.id.action_switch_order -> {
                 if (isClickedShort()) return true
                 viewModel.changeOrder()
@@ -101,17 +86,11 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
         searchView.queryHint = getString(R.string.codigo_o_nombre)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Timber.d("qwer onQueryTextSubmit")
-                searchView.clearFocus()// close the keyboard on load todo: don't work
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                Timber.d("qwer onQueryTextChange")
                 listAdapter?.filter(newText)
-                if (newText.isNullOrEmpty()) {
-                    hideKeyboard()//todo:
-                }
                 return true
             }
         })
@@ -141,10 +120,8 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 
     private fun setLoadingBarVisibility(isLoading: Boolean) {
         viewBinding?.let {
-            Timber.d("qwer setLoadingBarVisibility")
             if (it.pbLoading.isVisible == isLoading) return
             val visibility: Int
-            Timber.d("qwer setLoadingBarVisibility CHANGING VISIBILITY")
             if (isLoading) {
                 visibility = View.VISIBLE
             } else {
@@ -155,7 +132,6 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
     }
 
     private fun setOrderIcon(order: String?) {
-        Timber.d("qwer setOrderIcon order: %s", order)
         orderItem?.let {
             when (order) {
                 null -> {
@@ -187,7 +163,6 @@ class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 
     //--  OnCurrencyClickListener  --
     override fun onItemClicked(codigo: String?) {
-        Timber.d("qwer onItemClicked")
         codigo?.let {
             val action = HomeListFragmentDirections.actionHomeListToDetailFragment(it)
             findNavController().currentDestination?.getAction(action.actionId)?.let {

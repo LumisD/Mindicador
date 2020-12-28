@@ -9,7 +9,6 @@ import com.lumisdinos.mindicador.common.util.isClickedShort
 import com.lumisdinos.mindicador.common.util.numbToStr
 import com.lumisdinos.mindicador.databinding.ItemCurrencyBinding
 import com.lumisdinos.mindicador.ui.model.CurrencyView
-import timber.log.Timber
 import java.util.*
 
 class CurrenciesListAdapter(private val itemClickListener: OnCurrencyClickListener) :
@@ -30,7 +29,6 @@ class CurrenciesListAdapter(private val itemClickListener: OnCurrencyClickListen
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: CurrencyView, clickListener: OnCurrencyClickListener) {
-            Timber.d("qwer bind nombre: %s, unidadMedida: %s, valor: %s", item.nombre, item.unidadMedida, item.valor)
             binding.nameTv.text = item.nombre
             binding.unitTv.text = item.unidadMedida
             binding.priceTv.text = numbToStr(item.valor)

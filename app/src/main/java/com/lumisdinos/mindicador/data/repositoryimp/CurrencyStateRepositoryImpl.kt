@@ -6,7 +6,6 @@ import com.lumisdinos.mindicador.domain.model.CurrencyStateModel
 import com.lumisdinos.mindicador.domain.repos.CurrencyStateRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import timber.log.Timber
 import javax.inject.Inject
 
 class CurrencyStateRepositoryImpl @Inject constructor(
