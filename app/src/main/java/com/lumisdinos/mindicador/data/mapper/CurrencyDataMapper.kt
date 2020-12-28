@@ -15,14 +15,6 @@ class CurrencyDataMapper @Inject constructor() {
         valor = valor
     )
 
-    fun CurrencyEntry.fromDataToEntity() = CurrencyEntity(
-        codigo = codigo,
-        nombre = nombre,
-        unidadMedida = unidad_medida,
-        fecha = fecha,
-        valor = valor
-    )
-
     fun CurrencyEntity.fromEntityToDomain() = CurrencyModel(
         codigo = codigo,
         nombre = nombre,

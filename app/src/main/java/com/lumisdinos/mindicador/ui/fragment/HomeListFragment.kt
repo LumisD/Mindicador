@@ -25,7 +25,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
+open class HomeListFragment : DaggerFragment(), OnCurrencyClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
